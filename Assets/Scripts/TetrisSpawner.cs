@@ -20,7 +20,7 @@ public class TetrisSpawner : MonoBehaviour
     public void NewTetrominoes()
     {
         //0.5초 마다 생성
-        Invoke("createTetrominoes", 0.5f);
+        Invoke("createTetrominoes", 0.1f);
     }
 
     //테트로미노 생성
