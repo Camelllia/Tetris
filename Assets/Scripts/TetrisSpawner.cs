@@ -33,6 +33,7 @@ public class TetrisSpawner : MonoBehaviour
             ListTetrominoes.Add(targetSpawn);
 
             nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(4, 1, 0), Quaternion.identity);
+            //
             //nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
