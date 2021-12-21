@@ -11,6 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
+    public static int dropScore;
     private static Transform[, ] grid = new Transform[Width, Height];
 
     bool isgameover;
@@ -105,19 +106,63 @@ public class TetrisBlock : MonoBehaviour
 
     void dropBlock()
     {
+        dropScore = 19;
+        //자식들 x,y 둘다 가져와
+        //각 자식들의 y좌표와 바닥의 차이
+        //가장 작은 값을 구해
+        //가장 작은 값이랑*2 스코어 플러스
+        for(int i = 0; i < 4; i++)
+        {
+            for (int j = Height - 1; j >= 0; j--)
+            {
+                int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
+                int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
+                if (grid[childX, j] != null && dropScore > childY - j)
+                {
+                    dropScore = childY - j;
+                    break;
+                }
+                else if (j == 0 && dropScore > childY)
+                {
+                    dropScore = childY;
+                }
+            }
+            Debug.Log(dropScore);
+        }
+        ScoreManager.Instance.score += dropScore * 2;
+
+        //int roundedX = Mathf.RoundToInt(transform.position.x);
+        //int roundedY = Mathf.RoundToInt(transform.position.y);
+        //for (int i = Height - 1; i >= 0; i--)
+        //{
+        //    if (grid[, i] != null)
+        //    {
+        //        //this.transform.position.y+1 - i;
+        //        break;
+        //    }
+        //    else
+        //    {
+        //        //자식들중에 y값 가장 낮은거 =            this.transform.position.y+1
+        //    }
+        //}
+        
+          
         FallTime = 0;
     }
 
     void checkForLines()
     {
+        //cnt 선언
         for(int i=Height-1;i>=0;i--) // 테트리스 높이만큼 반복해서
         {
             if(HasLine(i))//줄이 꽉 차있다면 
             {
+                //cnt ++해주고 
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
             }
         }
+        //여기서 cnt값에 따라 점수 추가
         
     }
 
