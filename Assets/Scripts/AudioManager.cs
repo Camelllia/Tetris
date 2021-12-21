@@ -18,7 +18,7 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = true;
         }
-}
+    }
     void Start()
     {
         play("Background");
@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour {
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
+        Debug.Log("play " + name);
     }
   
 }
