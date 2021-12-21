@@ -20,6 +20,8 @@ public class TetrisBlock : MonoBehaviour
 
     TetrisSpawner TetrisSpawn;
 
+    [SerializeField] GameObject starParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -213,6 +215,7 @@ public class TetrisBlock : MonoBehaviour
     {
         for(int j=0;j<Width;j++)
         {
+            Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }

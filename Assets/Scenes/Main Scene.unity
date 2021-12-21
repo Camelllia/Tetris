@@ -242,6 +242,11 @@ MonoBehaviour:
     volume: 0.446
     pitch: 0
     source: {fileID: 0}
+  - name: Background
+    clip: {fileID: 8300000, guid: 9fc41c788bb4be04bb28a6bc42faf4da, type: 3}
+    volume: 0.446
+    pitch: 0
+    source: {fileID: 0}
 --- !u!4 &757457965
 Transform:
   m_ObjectHideFlags: 0
