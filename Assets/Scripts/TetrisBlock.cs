@@ -11,7 +11,12 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
-    private static Transform[,] grid = new Transform[Width, Height];
+    private static Transform[, ] grid = new Transform[Width, Height];
+
+    bool isgameover;
+
+    TetrisSpawner TetrisSpawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +28,10 @@ public class TetrisBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(TetrisSpawn==null)
+        {
+            TetrisSpawn = FindObjectOfType<TetrisSpawner>();
+        }
         timer += Time.deltaTime;
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
         if((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft+AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
@@ -77,6 +86,10 @@ public class TetrisBlock : MonoBehaviour
         if (!ValidMove())
         {
             transform.position -= new Vector3(0, -1, 0);
+            AddToGrid();
+            checkForLines(); // 가로 줄이 꽉 찼는지 확인
+            this.enabled = false;
+            TetrisSpawn.NewTetrominoes();
         }
         previousTime = Time.time;
     }
@@ -92,7 +105,76 @@ public class TetrisBlock : MonoBehaviour
 
     void dropBlock()
     {
-        FallTime = 0.003f;
+        FallTime = 0;
+    }
+
+    void checkForLines()
+    {
+        for(int i=Height-1;i>=0;i--) // 테트리스 높이만큼 반복해서
+        {
+            if(HasLine(i))//줄이 꽉 차있다면 
+            {
+                DeleteLine(i);//줄을 삭제하고
+                RowDown(i);//내려준다
+            }
+        }
+        
+    }
+
+    bool HasLine(int i)
+    {
+        for(int j=0;j<Width;j++)
+        {
+            if (grid[j, i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void DeleteLine(int i)
+    {
+        for(int j=0;j<Width;j++)
+        {
+            Destroy(grid[j, i].gameObject);
+            grid[j, i] = null;
+        }
+    }
+
+    void RowDown(int i)
+    {
+        for(int y=i;y<Height;y++)
+        {
+            for(int j=0;j<Width;j++)
+            {
+                if(grid[j,y]!=null)
+                {
+                    grid[j, y - 1] = grid[j, y];
+                    grid[j, y] = null;
+                    grid[j, y - 1].transform.position -= new Vector3(0, 1, 0);
+                }
+            }
+        }
+    }
+
+
+    void AddToGrid()
+    {
+        foreach(Transform children in transform)
+        {
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+
+            if(roundedY<20)
+            {
+                grid[roundedX, roundedY] = children;
+            }
+            /*else
+            {
+                gameOver();
+            }*/
+        }
     }
 
 
@@ -109,11 +191,20 @@ public class TetrisBlock : MonoBehaviour
             {
                 return false;
             }
-            /*if(grid[roundedX,roundedY]!=null)
+            if(grid[roundedX,roundedY]!=null)
             {
                 return false;
-            }*/
+            }
         }
         return true;
     }
+
+    void gameOver()
+    {
+        isgameover = true;
+        Debug.Log("gameover");
+    }
+
+
+
 }
