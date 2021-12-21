@@ -38,6 +38,11 @@ public class TetrisBlock : MonoBehaviour
         {
             moveDown();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            dropBlock();
+        }
     }
 
     void moveLeft()
@@ -78,6 +83,11 @@ public class TetrisBlock : MonoBehaviour
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         }
+    }
+
+    void dropBlock()
+    {
+        FallTime = 0;
     }
 
 
