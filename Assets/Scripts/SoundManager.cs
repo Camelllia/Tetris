@@ -7,7 +7,8 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Dictionary<string, AudioClip> _audioClips = new Dictionary<string, AudioClip>();
+
     }
 
     // Update is called once per frame
