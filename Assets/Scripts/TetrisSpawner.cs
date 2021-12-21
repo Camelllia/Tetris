@@ -52,6 +52,7 @@ public class TetrisSpawner : MonoBehaviour
         }
     }
 
+    //테트로미노 삭제 및 관리
     void destroyCheck()
     {
         if(ListTetrominoes.Count > 0)
