@@ -6,6 +6,8 @@ public class TetrisBlock : MonoBehaviour
 {
     public Vector3 RotationPoint;
     private float previousTime, previousTimeLeft, previousTimeRight;
+    private float timer;
+    public float AutorepeatDelay, AutorepeatSpeed;
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
@@ -13,18 +15,21 @@ public class TetrisBlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        timer = 0;
+        AutorepeatSpeed = 0.05f;
+        AutorepeatDelay = 0.17f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
-        if((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
+        if((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft+AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
         {
             moveLeft();
         }
-        else if ((Input.GetKey(KeyCode.RightArrow) && Time.time - previousTimeRight > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime)))
+        else if ((Input.GetKey(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime)))
         {
             moveRight();
         }
