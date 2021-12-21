@@ -87,7 +87,7 @@ public class TetrisBlock : MonoBehaviour
 
     void dropBlock()
     {
-        FallTime = 0;
+        FallTime = 0.003f;
     }
 
 
