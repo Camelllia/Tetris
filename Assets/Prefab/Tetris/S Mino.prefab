@@ -337,8 +337,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4979701880922478044}
+  - component: {fileID: 2101635450661331362}
   m_Layer: 0
-  m_Name: RLL Shape
+  m_Name: S Mino
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -362,3 +363,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2101635450661331362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8908760019456552538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44589479e54f77f49943337d7579d8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotationPoint: {x: 0, y: 0, z: 0}
+  AutorepeatDelay: 0
+  AutorepeatSpeed: 0
+  FallTime: 0.8
