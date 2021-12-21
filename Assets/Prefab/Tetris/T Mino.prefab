@@ -51,6 +51,7 @@ MonoBehaviour:
   AutorepeatDelay: 0
   AutorepeatSpeed: 0
   FallTime: 0.8
+  starParticle: {fileID: 165734, guid: 2a29c32d97bebe2448831c9e00747866, type: 3}
 --- !u!1 &3695904877471795373
 GameObject:
   m_ObjectHideFlags: 0
