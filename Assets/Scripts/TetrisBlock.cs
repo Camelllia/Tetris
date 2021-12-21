@@ -11,7 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
-    private static Transform[, ] grid = new Transform[Width, Height];
+    private static Transform[,] grid = new Transform[Width, Height];
 
     private int dropScore;
     private int cnt;
@@ -34,13 +34,13 @@ public class TetrisBlock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(TetrisSpawn==null)
+        if (TetrisSpawn == null)
         {
             TetrisSpawn = FindObjectOfType<TetrisSpawner>();
         }
         timer += Time.deltaTime;
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
-        if((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft+AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
+        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
         {
             moveLeft();
         }
@@ -48,13 +48,13 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if(Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             rotateBlock();
         }
 
 
-        if(Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? FallTime/14 : FallTime))
+        if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? FallTime / 14 : FallTime * LevelManager.Instance.speed))
         {
             moveDown();
         }
@@ -68,7 +68,7 @@ public class TetrisBlock : MonoBehaviour
     void moveLeft()
     {
         transform.position += new Vector3(-1, 0, 0);//왼쪽으로 이동
-        if(!ValidMove())
+        if (!ValidMove())
         {
             transform.position -= new Vector3(-1, 0, 0);
         }
@@ -116,7 +116,7 @@ public class TetrisBlock : MonoBehaviour
         //각 자식들의 y좌표와 바닥의 차이
         //가장 작은 값을 구해
         //가장 작은 값이랑*2 스코어 플러스
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             for (int j = Height - 1; j >= 0; j--)
             {
@@ -150,19 +150,19 @@ public class TetrisBlock : MonoBehaviour
         //        //자식들중에 y값 가장 낮은거 =            this.transform.position.y+1
         //    }
         //}
-        
-          
+
+
         FallTime = 0;
     }
-        
+
 
     void checkForLines()
     {
         cnt = 0;
         //cnt 선언
-        for(int i=Height-1;i>=0;i--) // 테트리스 높이만큼 반복해서
+        for (int i = Height - 1; i >= 0; i--) // 테트리스 높이만큼 반복해서
         {
-            if(HasLine(i))//줄이 꽉 차있다면 
+            if (HasLine(i))//줄이 꽉 차있다면 
             {
                 cnt++;//cnt ++해주고 
                 DeleteLine(i);//줄을 삭제하고
@@ -173,16 +173,19 @@ public class TetrisBlock : MonoBehaviour
         if (cnt == 1)
         {
             ScoreManager.Instance.score += 100;
+            LevelManager.Instance.linecnt += 1;
             backtoback = false;
         }
         else if (cnt == 2)
         {
             ScoreManager.Instance.score += 300;
+            LevelManager.Instance.linecnt += 2;
             backtoback = false;
         }
         else if (cnt == 3)
         {
             ScoreManager.Instance.score += 500;
+            LevelManager.Instance.linecnt += 3;
             backtoback = false;
         }
         else if (cnt == 4)
@@ -195,13 +198,14 @@ public class TetrisBlock : MonoBehaviour
             {
                 ScoreManager.Instance.score += 800;
             }
+            LevelManager.Instance.linecnt += 4;
             backtoback = true;
         }
     }
 
     bool HasLine(int i)
     {
-        for(int j=0;j<Width;j++)
+        for (int j = 0; j < Width; j++)
         {
             if (grid[j, i] == null)
             {
@@ -213,7 +217,7 @@ public class TetrisBlock : MonoBehaviour
 
     void DeleteLine(int i)
     {
-        for(int j=0;j<Width;j++)
+        for (int j = 0; j < Width; j++)
         {
             Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
             Destroy(grid[j, i].gameObject);
@@ -223,11 +227,11 @@ public class TetrisBlock : MonoBehaviour
 
     void RowDown(int i)
     {
-        for(int y=i;y<Height;y++)
+        for (int y = i; y < Height; y++)
         {
-            for(int j=0;j<Width;j++)
+            for (int j = 0; j < Width; j++)
             {
-                if(grid[j,y]!=null)
+                if (grid[j, y] != null)
                 {
                     grid[j, y - 1] = grid[j, y];
                     grid[j, y] = null;
@@ -240,12 +244,12 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        foreach(Transform children in transform)
+        foreach (Transform children in transform)
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if(roundedY<20)
+            if (roundedY < 20)
             {
                 grid[roundedX, roundedY] = children;
             }
@@ -261,16 +265,16 @@ public class TetrisBlock : MonoBehaviour
     //맵 범위 내에서 움직이고 있는지 확인하는 함수
     bool ValidMove()
     {
-        foreach(Transform children in transform)
+        foreach (Transform children in transform)
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if(roundedX<0||roundedX>=Width||roundedY<0||roundedY>=Height)
+            if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height)
             {
                 return false;
             }
-            if(grid[roundedX,roundedY]!=null)
+            if (grid[roundedX, roundedY] != null)
             {
                 return false;
             }

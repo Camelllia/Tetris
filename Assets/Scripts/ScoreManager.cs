@@ -7,6 +7,7 @@ public class ScoreManager : MonoBehaviour
 {
     public int score;
     public int bestScore;
+    public Text scoreText;
 
     public static ScoreManager Instance
     {
@@ -35,6 +36,6 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scoreText.text = "Score: " + score;
     }
 }
