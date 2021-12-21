@@ -11,9 +11,11 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
-    public static int dropScore;
     private static Transform[, ] grid = new Transform[Width, Height];
 
+    private int dropScore;
+    private int cnt;
+    private bool backtoback;
     bool isgameover;
 
     TetrisSpawner TetrisSpawn;
@@ -24,6 +26,7 @@ public class TetrisBlock : MonoBehaviour
         timer = 0;
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
+        backtoback = false;
     }
 
     // Update is called once per frame
@@ -149,21 +152,49 @@ public class TetrisBlock : MonoBehaviour
           
         FallTime = 0;
     }
+        
 
     void checkForLines()
     {
+        cnt = 0;
         //cnt 선언
         for(int i=Height-1;i>=0;i--) // 테트리스 높이만큼 반복해서
         {
             if(HasLine(i))//줄이 꽉 차있다면 
             {
-                //cnt ++해주고 
+                cnt++;//cnt ++해주고 
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
             }
         }
         //여기서 cnt값에 따라 점수 추가
-        
+        if (cnt == 1)
+        {
+            ScoreManager.Instance.score += 100;
+            backtoback = false;
+        }
+        else if (cnt == 2)
+        {
+            ScoreManager.Instance.score += 300;
+            backtoback = false;
+        }
+        else if (cnt == 3)
+        {
+            ScoreManager.Instance.score += 500;
+            backtoback = false;
+        }
+        else if (cnt == 4)
+        {
+            if (backtoback)
+            {
+                ScoreManager.Instance.score += 1200;
+            }
+            else
+            {
+                ScoreManager.Instance.score += 800;
+            }
+            backtoback = true;
+        }
     }
 
     bool HasLine(int i)
