@@ -95,7 +95,10 @@ public class TetrisBlock : MonoBehaviour
             AddToGrid();
             checkForLines(); // 가로 줄이 꽉 찼는지 확인
             this.enabled = false;
-            TetrisSpawn.NewTetrominoes();
+            if (!isgameover)
+            {
+                TetrisSpawn.NewTetrominoes();
+            }
         }
         previousTime = Time.time;
     }
@@ -136,21 +139,7 @@ public class TetrisBlock : MonoBehaviour
         }
         ScoreManager.Instance.score += dropScore * 2;
 
-        //int roundedX = Mathf.RoundToInt(transform.position.x);
-        //int roundedY = Mathf.RoundToInt(transform.position.y);
-        //for (int i = Height - 1; i >= 0; i--)
-        //{
-        //    if (grid[, i] != null)
-        //    {
-        //        //this.transform.position.y+1 - i;
-        //        break;
-        //    }
-        //    else
-        //    {
-        //        //자식들중에 y값 가장 낮은거 =            this.transform.position.y+1
-        //    }
-        //}
-
+       
 
         FallTime = 0;
     }
@@ -253,10 +242,10 @@ public class TetrisBlock : MonoBehaviour
             {
                 grid[roundedX, roundedY] = children;
             }
-            /*else
+            else
             {
                 gameOver();
-            }*/
+            }
         }
     }
 
@@ -286,6 +275,7 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(1).gameObject.SetActive(true);
     }
 
 
