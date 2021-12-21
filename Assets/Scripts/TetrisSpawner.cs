@@ -32,7 +32,8 @@ public class TetrisSpawner : MonoBehaviour
             targetSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position, Quaternion.identity);
             ListTetrominoes.Add(targetSpawn);
 
-            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(4, 1, 0), Quaternion.identity);
+            //다음 스폰될 테트로미노 보여주기
+            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(5.6f, -0.2f, 0), Quaternion.identity);
             //nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
