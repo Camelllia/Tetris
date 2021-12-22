@@ -41,7 +41,7 @@ public class TetrisSpawner : MonoBehaviour
             ListTetrominoes.Add(targetSpawn);
 
             //다음 스폰될 테트로미노 보여주기
-            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(6.5f, -0.5f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
@@ -53,7 +53,7 @@ public class TetrisSpawner : MonoBehaviour
             targetSpawn.GetComponent<TetrisBlock>().enabled = true;
             ListTetrominoes.Add(targetSpawn);
             nextSpawn = null;
-            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(4, 1, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             //destroyCheck();
@@ -85,6 +85,7 @@ public class TetrisSpawner : MonoBehaviour
         targetSpawn.transform.localScale = Vector3.one; // 스케일 1로 만들기
         targetSpawn.GetComponent<TetrisBlock>().enabled = true; // 홀드된 테트로미노 기능 켜기
         createTetrominoes(); //다시 테트로미노 생성
+        nextSpawn.transform.position = targetSpawn.transform.position + new Vector3(6.4f, -0.5f, 0);
         Debug.Log("Hold");
     }
  
