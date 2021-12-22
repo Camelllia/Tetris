@@ -105,7 +105,7 @@ public class TetrisBlock : MonoBehaviour
 
     void rotateBlock()
     {
-        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         if (!ValidMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
