@@ -16,6 +16,14 @@ public class TetrisSpawner : MonoBehaviour
         NewTetrominoes();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Hold();
+        }
+    }
+
     //새로운 테트로미노 생성
     public void NewTetrominoes()
     {
@@ -48,7 +56,7 @@ public class TetrisSpawner : MonoBehaviour
             nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(4, 1, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            destroyCheck();
+            //destroyCheck();
         }
     }
 
@@ -66,6 +74,18 @@ public class TetrisSpawner : MonoBehaviour
                 }
             }
         }
+    }
+
+    void Hold()
+    {
+        targetSpawn.GetComponent<TetrisBlock>().enabled = false; // 원래 테트로미노 기능 끄기
+        Destroy(targetSpawn);
+        targetSpawn = nextSpawn; //다음 스폰될 테트로미노를 현재 테트로미노로 홀드하기
+        targetSpawn.transform.position = transform.position; // 위치를 스폰 위치로 이동
+        targetSpawn.transform.localScale = Vector3.one; // 스케일 1로 만들기
+        targetSpawn.GetComponent<TetrisBlock>().enabled = true; // 홀드된 테트로미노 기능 켜기
+        createTetrominoes(); //다시 테트로미노 생성
+        Debug.Log("Hold");
     }
  
 }
