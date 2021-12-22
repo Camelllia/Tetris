@@ -100,6 +100,7 @@ public class TetrisBlock : MonoBehaviour
             AddToGrid();
             checkForLines(); // 가로 줄이 꽉 찼는지 확인
             this.enabled = false;
+            TetrisSpawn.CanHold = true; // 밑에 닿았으므로 홀드 가능해짐
             if (!isgameover)
             {
                 TetrisSpawn.NewTetrominoes();
