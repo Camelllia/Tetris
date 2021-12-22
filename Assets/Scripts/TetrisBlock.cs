@@ -48,9 +48,13 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        else if (Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.X))
         {
             rotateBlock();
+        }
+        else if(Input.GetKeyDown(KeyCode.Z))
+        {
+            leftrotateBlock();
         }
 
 
@@ -109,6 +113,15 @@ public class TetrisBlock : MonoBehaviour
         if (!ValidMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+        }
+    }
+
+    void leftrotateBlock()
+    {
+        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+        if (!ValidMove())
+        {
+            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
         }
     }
 
