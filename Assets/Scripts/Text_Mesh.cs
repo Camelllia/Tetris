@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TextMesh : MonoBehaviour
+public class Text_Mesh : MonoBehaviour
 {
     public GameObject textMesh;
     public float targetY;

@@ -109,8 +109,11 @@ public class TetrisBlock : MonoBehaviour
 
     void rotateBlock()
     {
-        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         if (!ValidMove())
+        {
+            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+        }
+        else
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         }
@@ -118,8 +121,12 @@ public class TetrisBlock : MonoBehaviour
 
     void leftrotateBlock()
     {
-        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+
         if (!ValidMove())
+        {
+            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+        }
+        else
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
         }
@@ -288,7 +295,7 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(3).gameObject.SetActive(true);
     }
 
 
