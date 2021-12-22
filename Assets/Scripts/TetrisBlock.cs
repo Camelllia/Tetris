@@ -317,7 +317,7 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedX >= Width || roundedY < 0 || roundedY >= Height)
+            if (roundedX >= Width)
             {
                 return false;
             }
@@ -335,7 +335,7 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedX < 0 || roundedY < 0 || roundedY >= Height)
+            if (roundedX < 0)
             {
                 return false;
             }
