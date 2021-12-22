@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
     public int level;
     public int linecnt;
     public float speed;
+    public Text lvlText;
+    public Text lineText;
+    public GameObject lvlupText;
 
     public static LevelManager Instance
     {
@@ -37,11 +41,15 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (linecnt >= 10 && level < 26)
+        if (linecnt >= 1 && level < 26)
         {
             level++;
-            linecnt -= 10;
+            lvlText.text = "Level: " + level;
+            linecnt -= 1;
             speed *= 0.8f;
+            Instantiate(lvlupText, lvlupText.transform.position, lvlupText.transform.rotation);
         }
+
+        lineText.text = "Line: " + (linecnt + (level - 1) * 10);
     }
 }
