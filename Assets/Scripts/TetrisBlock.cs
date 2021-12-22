@@ -109,27 +109,46 @@ public class TetrisBlock : MonoBehaviour
 
     void rotateBlock()
     {
-        if (!ValidMove())
+        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+
+        if (!ValidRMove())
         {
-            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+            while (!ValidRMove())
+            {
+                transform.position += new Vector3(-1, 0, 0);
+            }
         }
-        else
+        else if (!ValidLMove())
         {
-            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+            while (!ValidLMove())
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
         }
+        
+
+
     }
 
     void leftrotateBlock()
     {
+        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+        if (!ValidLMove())
+        {
+            while (!ValidLMove())
+            {
+                transform.position += new Vector3(1, 0, 0);
+            }
+        }
 
-        if (!ValidMove())
+        else if (!ValidRMove())
         {
-            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+            while (!ValidRMove())
+            {
+                transform.position += new Vector3(-1, 0, 0);
+            }
         }
-        else
-        {
-            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
-        }
+
     }
 
     void dropBlock()
@@ -280,6 +299,43 @@ public class TetrisBlock : MonoBehaviour
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
             if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height)
+            {
+                return false;
+            }
+            if (grid[roundedX, roundedY] != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool ValidRMove()
+    {
+        foreach (Transform children in transform)
+        {
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+
+            if (roundedX >= Width || roundedY < 0 || roundedY >= Height)
+            {
+                return false;
+            }
+            if (grid[roundedX, roundedY] != null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    bool ValidLMove()
+    {
+        foreach (Transform children in transform)
+        {
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+
+            if (roundedX < 0 || roundedY < 0 || roundedY >= Height)
             {
                 return false;
             }
