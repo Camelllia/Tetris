@@ -23,13 +23,12 @@ public class Text_Mesh : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        degree += 0.5f;
+        degree += 150f * Time.deltaTime;
         radian = degree * Mathf.PI / 180;
-        Debug.Log(Mathf.Sin(radian) + "::" + degree);
         transform.position = new Vector3(transform.position.x, targetY -3f + Mathf.Sin(radian) * 3f, transform.position.z);
-        if (degree < 90)
+        if (degree < 60)
         {
-            scale = 1 + Mathf.Sin(radian*2f) * 0.1f;
+            scale = 0.5f + Mathf.Sin(radian*2f) * 0.4f;
             transform.localScale = new Vector3(scale, scale, scale);
         }
         //if (transform.position.y < targetY - 0.01f && !top)

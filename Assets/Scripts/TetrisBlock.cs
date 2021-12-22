@@ -15,6 +15,7 @@ public class TetrisBlock : MonoBehaviour
 
     private int dropScore;
     private int cnt;
+    private int combo;
     private bool backtoback;
     bool isgameover;
 
@@ -166,7 +167,7 @@ public class TetrisBlock : MonoBehaviour
                 int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
                 if (grid[childX, j] != null && dropScore > childY - j)
                 {
-                    dropScore = childY - j;
+                    dropScore = childY - j - 1;
                     break;
                 }
                 else if (j == 0 && dropScore > childY)
@@ -193,42 +194,44 @@ public class TetrisBlock : MonoBehaviour
             if (HasLine(i))//줄이 꽉 차있다면 
             {
                 cnt++;//cnt ++해주고 
+                LevelManager.Instance.linecnt++;
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
             }
         }
         //여기서 cnt값에 따라 점수 추가
-        if (cnt == 1)
+        if (cnt == 0)
         {
-            ScoreManager.Instance.score += 100;
-            LevelManager.Instance.linecnt += 1;
+            combo = 0;
+        }
+        else if (cnt == 1)
+        {
+            ScoreManager.Instance.score += 100 * LevelManager.Instance.level;
             backtoback = false;
         }
         else if (cnt == 2)
         {
-            ScoreManager.Instance.score += 300;
-            LevelManager.Instance.linecnt += 2;
+            ScoreManager.Instance.score += 300 * LevelManager.Instance.level;
             backtoback = false;
         }
         else if (cnt == 3)
         {
-            ScoreManager.Instance.score += 500;
-            LevelManager.Instance.linecnt += 3;
+            ScoreManager.Instance.score += 500 * LevelManager.Instance.level;
             backtoback = false;
         }
         else if (cnt == 4)
         {
             if (backtoback)
             {
-                ScoreManager.Instance.score += 1200;
+                ScoreManager.Instance.score += 1200 * LevelManager.Instance.level;
             }
             else
             {
-                ScoreManager.Instance.score += 800;
+                ScoreManager.Instance.score += 800 * LevelManager.Instance.level;
             }
-            LevelManager.Instance.linecnt += 4;
             backtoback = true;
         }
+        ScoreManager.Instance.score += combo * 50 * LevelManager.Instance.level;
     }
 
     bool HasLine(int i)
