@@ -17,6 +17,7 @@ public class TetrisBlock : MonoBehaviour
     private int cnt;
     private int combo;
     private bool backtoback;
+    public bool arrived;
     bool isgameover;
 
     TetrisSpawner TetrisSpawn;
@@ -30,6 +31,7 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
         backtoback = false;
+        arrived = false;
     }
 
     // Update is called once per frame
@@ -58,8 +60,32 @@ public class TetrisBlock : MonoBehaviour
             leftrotateBlock();
         }
 
+        for (int i = 0; i < 4; i++)
+        {
+            int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
+            int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
+            if (childY == 0)
+            {
+                arrived = true;
+                break;
+            }
+            else if (grid[childX, childY - 1] != null)
+            {
+                arrived = true;
+                break;
+            }
+            else
+            {
+                arrived = false;
+            }
+        }
 
-        if (Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? FallTime / 14 : FallTime * LevelManager.Instance.speed))
+        if (Time.time - previousTime > FallTime * LevelManager.Instance.speed)
+        {
+            moveDown();
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow) && !arrived && Time.time - previousTime > FallTime / 14)
         {
             moveDown();
         }
