@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Text_Mesh : MonoBehaviour
 {
-    public GameObject textMesh;
+    public TextMesh textMesh;
     public float targetY;
     public float degree;
     public float radian;
@@ -18,6 +18,8 @@ public class Text_Mesh : MonoBehaviour
         scale = 1;
         targetY = transform.position.y + 3f;
         Destroy(gameObject, 1f);
+
+
     }
 
     // Update is called once per frame
