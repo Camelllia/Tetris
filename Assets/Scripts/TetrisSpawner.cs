@@ -8,9 +8,9 @@ public class TetrisSpawner : MonoBehaviour
     public List<GameObject> ListTetrominoes;
     GameObject nextSpawn;
     GameObject targetSpawn;
+    GameObject HoldBasket;
     bool isFirst = true;
     public bool CanHold = true;
-    GameObject HoldBasket;
 
     TetrisBlock TetrisBlock;
     
@@ -31,12 +31,6 @@ public class TetrisSpawner : MonoBehaviour
         {
             Hold();
         }
-
-        if(!CanHold)
-        {
-            //Debug.Log("Cant Hold");
-        }
-
     }
 
     //새로운 테트로미노 생성
