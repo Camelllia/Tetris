@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public float speed;
     public Text lvlText;
     public Text lineText;
-    public GameObject lvlupText;
+    public GameObject lvlupMesh;
 
     public static LevelManager Instance
     {
@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
             lvlText.text = "Level: " + level;
             linecnt -= 1;
             speed *= 0.8f;
-            Instantiate(lvlupText, lvlupText.transform.position, lvlupText.transform.rotation);
+            Instantiate(lvlupMesh, lvlupMesh.transform.position, lvlupMesh.transform.rotation);
         }
 
         lineText.text = "Line: " + (linecnt + (level - 1) * 10);

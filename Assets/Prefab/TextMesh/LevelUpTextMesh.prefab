@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67944166145e8f48a81b5b8032dbdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMesh: {fileID: 6055092317034062063, guid: a16ef78b1aeee64448f30c5ade019411, type: 3}
+  textMesh: {fileID: 7529717134849084543}
   targetY: 0
   degree: 0
   radian: 0
+  scale: 0

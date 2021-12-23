@@ -15,8 +15,6 @@ public class TetrisBlock : MonoBehaviour
 
     private int dropScore;
     private int cnt;
-    private int combo;
-    private bool backtoback;
     public bool arrived;
     bool isgameover;
 
@@ -30,7 +28,6 @@ public class TetrisBlock : MonoBehaviour
         timer = 0;
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
-        backtoback = false;
         arrived = false;
     }
 
@@ -80,7 +77,11 @@ public class TetrisBlock : MonoBehaviour
             }
         }
 
-        if (Time.time - previousTime > FallTime * LevelManager.Instance.speed)
+        if (Time.time - previousTime > FallTime * LevelManager.Instance.speed && !arrived)
+        {
+            moveDown();
+        }
+        else if (Time.time - previousTime > FallTime * (35 + LevelManager.Instance.speed) / 50 && arrived)
         {
             moveDown();
         }
@@ -139,21 +140,31 @@ public class TetrisBlock : MonoBehaviour
     {
         transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
 
+
+        Debug.Log("a");
         if (!ValidRMove())
         {
             while (!ValidRMove())
             {
+                Debug.Log("R");
                 transform.position += new Vector3(-1, 0, 0);
             }
         }
+        
         else if (!ValidLMove())
         {
+            Debug.Log("b");
             while (!ValidLMove())
             {
+                Debug.Log("L");
                 transform.position += new Vector3(1, 0, 0);
             }
         }
-        
+        else if (!ValidLMove() && !ValidRMove())
+        {
+            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+        }
+
 
 
     }
@@ -165,16 +176,21 @@ public class TetrisBlock : MonoBehaviour
         {
             while (!ValidLMove())
             {
+                Debug.Log("R");
                 transform.position += new Vector3(1, 0, 0);
             }
         }
-
         else if (!ValidRMove())
         {
             while (!ValidRMove())
             {
+                Debug.Log("L");
                 transform.position += new Vector3(-1, 0, 0);
             }
+        }
+        else if(!ValidLMove() && !ValidRMove())
+        {
+            transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         }
 
     }
@@ -226,39 +242,7 @@ public class TetrisBlock : MonoBehaviour
                 RowDown(i);//내려준다
             }
         }
-        //여기서 cnt값에 따라 점수 추가
-        if (cnt == 0)
-        {
-            combo = 0;
-        }
-        else if (cnt == 1)
-        {
-            ScoreManager.Instance.score += 100 * LevelManager.Instance.level;
-            backtoback = false;
-        }
-        else if (cnt == 2)
-        {
-            ScoreManager.Instance.score += 300 * LevelManager.Instance.level;
-            backtoback = false;
-        }
-        else if (cnt == 3)
-        {
-            ScoreManager.Instance.score += 500 * LevelManager.Instance.level;
-            backtoback = false;
-        }
-        else if (cnt == 4)
-        {
-            if (backtoback)
-            {
-                ScoreManager.Instance.score += 1200 * LevelManager.Instance.level;
-            }
-            else
-            {
-                ScoreManager.Instance.score += 800 * LevelManager.Instance.level;
-            }
-            backtoback = true;
-        }
-        ScoreManager.Instance.score += combo * 50 * LevelManager.Instance.level;
+        ScoreManager.Instance.CountScoreLine(cnt);
     }
 
     bool HasLine(int i)
@@ -328,14 +312,11 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height)
+            if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height|| grid[roundedX, roundedY] != null)
             {
                 return false;
             }
-            if (grid[roundedX, roundedY] != null)
-            {
-                return false;
-            }
+            
         }
         return true;
     }
@@ -347,14 +328,11 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedX >= Width)
+            if (roundedX >= Width|| grid[roundedX, roundedY] != null)
             {
                 return false;
             }
-            if (grid[roundedX, roundedY] != null)
-            {
-                return false;
-            }
+            
         }
         return true;
     }
@@ -364,15 +342,12 @@ public class TetrisBlock : MonoBehaviour
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
-
-            if (roundedX < 0)
+            Debug.Log("X:"+roundedX);
+            if (roundedX < 0 || grid[roundedX, roundedY] != null)
             {
                 return false;
             }
-            if (grid[roundedX, roundedY] != null)
-            {
-                return false;
-            }
+            
         }
         return true;
     }

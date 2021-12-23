@@ -89,7 +89,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 60
+  m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 0}
@@ -108,4 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67944166145e8f48a81b5b8032dbdb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMesh: {fileID: 7485644066422618901}
+  textMesh: {fileID: 7485644066422618907}
+  targetY: 0
+  degree: 0
+  radian: 0
+  scale: 0
