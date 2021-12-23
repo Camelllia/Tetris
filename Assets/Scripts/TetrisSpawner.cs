@@ -101,7 +101,7 @@ public class TetrisSpawner : MonoBehaviour
         {
             isHoldFirst = false; //첫 홀드가 이제 아님
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
-            HoldBasket.transform.position = targetSpawn.transform.position + new Vector3(-8, 2, 0); // 홀드 바구니 위치로 이동
+            HoldBasket.transform.position = new Vector3(-5, 16, 0); // 홀드 바구니 위치로 이동
             HoldBasket.GetComponent<TetrisBlock>().enabled = false; // 홀드 값의 기능을 꺼줌
             targetSpawn = nextSpawn; // 현재 테트로미노를 다음 테트로미노에서 땡겨옴
             targetSpawn.transform.position = transform.position; // 스폰 위치로 이동
@@ -117,7 +117,7 @@ public class TetrisSpawner : MonoBehaviour
                 HoldBasket.transform.position = transform.position;
                 HoldBasket.GetComponent<TetrisBlock>().enabled = true; 
                 HoldBasket = targetSpawn;
-                HoldBasket.transform.position = transform.position + new Vector3(-10, 0, 0);
+                HoldBasket.transform.position = new Vector3(-5, 16,0);
                 targetSpawn.GetComponent<TetrisBlock>().enabled = false;             
                 HoldBasket.transform.position = targetSpawn.transform.position; 
                 CanHold = false; // 홀드를 실행했으니 홀드를 다시 못하는 상황으로 만들어 줌
