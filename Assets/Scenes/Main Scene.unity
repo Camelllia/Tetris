@@ -1070,6 +1070,7 @@ MonoBehaviour:
   - {fileID: 8908760019456552538, guid: 87e322c1fe4276645ada3a3c8b3c7dee, type: 3}
   - {fileID: 1951382203804368706, guid: 7721d08818d4dd84f90fa122d87fcce0, type: 3}
   ListTetrominoes: []
+  CanHold: 1
 --- !u!4 &1475225563
 Transform:
   m_ObjectHideFlags: 0
@@ -1078,7 +1079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475225561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 19, z: 0}
+  m_LocalPosition: {x: 5, y: 17.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
