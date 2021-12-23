@@ -8,9 +8,7 @@ public class TetrisSpawner : MonoBehaviour
     public List<GameObject> ListTetrominoes;
     GameObject nextSpawn;
     GameObject targetSpawn;
-    GameObject DropTetromino;
     bool isFirst = true;
-    bool isHoldFirst = true;
     public bool CanHold = true;
     GameObject HoldBasket;
 
@@ -94,12 +92,10 @@ public class TetrisSpawner : MonoBehaviour
     }
 
     void Hold()
-    {
-        Debug.Log("Hold");
+    { 
 
-        if(isHoldFirst) // 홀드가 처음일때
+        if(HoldBasket==null) // 홀드가 처음일때
         {
-            isHoldFirst = false; //첫 홀드가 이제 아님
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
             HoldBasket.transform.position = new Vector3(-5, 16, 0); // 홀드 바구니 위치로 이동
             HoldBasket.GetComponent<TetrisBlock>().enabled = false; // 홀드 값의 기능을 꺼줌
