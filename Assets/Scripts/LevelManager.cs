@@ -10,7 +10,6 @@ public class LevelManager : MonoBehaviour
     public float speed;
     public Text lvlText;
     public Text lineText;
-    public GameObject lvlupMesh;
 
     public static LevelManager Instance
     {
@@ -41,13 +40,13 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (linecnt >= 1 && level < 26)
+        if (linecnt >= 10 && level < 26)
         {
             level++;
             lvlText.text = "Level: " + level;
-            linecnt -= 1;
+            linecnt -= 10;
             speed *= 0.8f;
-            Instantiate(lvlupMesh, lvlupMesh.transform.position, lvlupMesh.transform.rotation);
+            TextMeshManager.Instance.CallLvlup();
         }
 
         lineText.text = "Line: " + (linecnt + (level - 1) * 10);

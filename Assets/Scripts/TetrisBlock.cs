@@ -18,6 +18,7 @@ public class TetrisBlock : MonoBehaviour
     public bool arrived;
     bool isgameover;
 
+
     TetrisSpawner TetrisSpawn;
 
     [SerializeField] GameObject starParticle;
@@ -218,7 +219,6 @@ public class TetrisBlock : MonoBehaviour
                     dropScore = childY;
                 }
             }
-            Debug.Log(dropScore);
         }
         ScoreManager.Instance.score += dropScore * 2;
 
@@ -234,15 +234,25 @@ public class TetrisBlock : MonoBehaviour
         //cnt 선언
         for (int i = Height - 1; i >= 0; i--) // 테트리스 높이만큼 반복해서
         {
-            if (HasLine(i))//줄이 꽉 차있다면 
+            if (HasLine(i))//줄이 꽉 차있다면
             {
-                cnt++;//cnt ++해주고 
+                cnt++;//cnt ++해주고
                 LevelManager.Instance.linecnt++;
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
             }
         }
+        
         ScoreManager.Instance.CountScoreLine(cnt);
+
+        if (cnt == 0)
+        {
+            ScoreManager.Instance.combo = 0;
+        }
+        else
+        {
+            ScoreManager.Instance.combo++;
+        }
     }
 
     bool HasLine(int i)
