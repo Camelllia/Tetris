@@ -307,7 +307,7 @@ public class TetrisBlock : MonoBehaviour
                 int roundedX = Mathf.RoundToInt(children.transform.position.x);
                 int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-                if (roundedY < 20)
+                if (roundedY < 19)
                 {
                     grid[roundedX, roundedY] = children;
                 }
@@ -373,9 +373,7 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(3).gameObject.SetActive(true);
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
+        ScoreManager.Instance.ScoreSet("", ScoreManager.Instance.score);
     }
-
-
-
 }
