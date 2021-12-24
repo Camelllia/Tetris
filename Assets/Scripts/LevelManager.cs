@@ -1,21 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< Updated upstream
 using UnityEngine.UI;
-=======
->>>>>>> Stashed changes
 
 public class LevelManager : MonoBehaviour
 {
     public int level;
     public int linecnt;
     public float speed;
-<<<<<<< Updated upstream
     public Text lvlText;
     public Text lineText;
-=======
->>>>>>> Stashed changes
 
     public static LevelManager Instance
     {
@@ -49,7 +43,6 @@ public class LevelManager : MonoBehaviour
         if (linecnt >= 10 && level < 26)
         {
             level++;
-<<<<<<< Updated upstream
             lvlText.text = "Level: " + level;
             linecnt -= 10;
             speed *= 0.8f;
@@ -57,10 +50,5 @@ public class LevelManager : MonoBehaviour
         }
 
         lineText.text = "Line: " + (linecnt + (level - 1) * 10);
-=======
-            linecnt -= 10;
-            speed *= 0.8f;
-        }
->>>>>>> Stashed changes
     }
 }
