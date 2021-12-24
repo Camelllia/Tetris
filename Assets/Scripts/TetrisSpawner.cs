@@ -6,6 +6,9 @@ public class TetrisSpawner : MonoBehaviour
 {
     public GameObject[] Tetrominoes;
     public List<GameObject> ListTetrominoes;
+    private List<GameObject> bag;
+    private HashSet<int> deck = new HashSet<int>();
+    private int next;
     GameObject nextSpawn;
     GameObject targetSpawn;
     GameObject HoldBasket;
@@ -17,6 +20,7 @@ public class TetrisSpawner : MonoBehaviour
     void Start()
     {
         ListTetrominoes = new List<GameObject>();
+        bag = new List<GameObject>();
         NewTetrominoes();
     }
 
@@ -43,14 +47,43 @@ public class TetrisSpawner : MonoBehaviour
     //테트로미노 생성
     void createTetrominoes()
     {
+
+
         if(isFirst)
         {
             isFirst = false;
-            targetSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position, Quaternion.identity);
-            ListTetrominoes.Add(targetSpawn);
+
+            if (deck.Count == Tetrominoes.Length)
+            {
+                deck.Clear();
+            }
+
+
+            do
+            {
+                next = Random.Range(0, Tetrominoes.Length);
+            } while (deck.Contains(next));
+
+            deck.Add(next);
+
+
+            targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
+
+            if (deck.Count == Tetrominoes.Length)
+            {
+                deck.Clear();
+            }
+
+
+            do
+            {
+                next = Random.Range(0, Tetrominoes.Length);
+            } while (deck.Contains(next));
+
+            deck.Add(next);
 
             //다음 스폰될 테트로미노 보여주기
-            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
@@ -60,30 +93,28 @@ public class TetrisSpawner : MonoBehaviour
             targetSpawn.transform.position = transform.position;
             targetSpawn.transform.localScale = Vector3.one;
             targetSpawn.GetComponent<TetrisBlock>().enabled = true;
-            ListTetrominoes.Add(targetSpawn);
+
+            if (deck.Count == Tetrominoes.Length)
+            {
+                deck.Clear();
+            }
+
+
+            do
+            {
+                next = Random.Range(0, Tetrominoes.Length);
+            } while (deck.Contains(next));
+
+            deck.Add(next);
+
             nextSpawn = null;
-            nextSpawn = Instantiate(Tetrominoes[Random.Range(0, Tetrominoes.Length)], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-            //destroyCheck();
+            
         }
     }
-
-    //테트로미노 삭제 및 관리
-    void destroyCheck()
-    {
-        if(ListTetrominoes.Count > 0)
-        {
-            for (int i = 0; i < ListTetrominoes.Count; i++)
-            {
-                if(ListTetrominoes[i].transform.childCount == 0)
-                {
-                    Destroy(ListTetrominoes[i]);
-                    ListTetrominoes.RemoveAt(i);
-                }
-            }
-        }
-    }
+    
 
     void Hold()
     { 
