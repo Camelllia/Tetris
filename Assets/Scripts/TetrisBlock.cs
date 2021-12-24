@@ -90,6 +90,7 @@ public class TetrisBlock : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) && !arrived && Time.time - previousTime > FallTime / 14)
         {
             moveDown();
+            ScoreManager.Instance.score++;
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
