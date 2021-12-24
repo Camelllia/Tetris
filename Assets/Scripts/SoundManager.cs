@@ -11,7 +11,14 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = mana.GetComponent<AudioSource>();
         isplaying = true;
+        audioSource.Play();
+        audioSource.loop=true;
+        audioSource.pitch = 1;
+        audioSource.volume = 1;
+
+
     }
 
     // Update is called once per frame
@@ -22,6 +29,15 @@ public class SoundManager : MonoBehaviour
 
     public void Onclick()
     {
+        if (isplaying)
+        {
+            audioSource.Pause();
+        }
+        else if(!isplaying)
+        {
+            audioSource.UnPause();
+        }
 
+        isplaying = !isplaying;
     }
 }
