@@ -12,6 +12,7 @@ public class TetrisSpawner : MonoBehaviour
     GameObject nextSpawn;
     GameObject targetSpawn;
     GameObject HoldBasket;
+    GameObject GhostTetromino;
     bool isFirst = true;
     public bool CanHold = true;
 
@@ -39,9 +40,10 @@ public class TetrisSpawner : MonoBehaviour
 
     //새로운 테트로미노 생성
     public void NewTetrominoes()
-    {
-        //0.5초 마다 생성
-        Invoke("createTetrominoes", 0.1f);
+    {       
+          //0.5초 마다 생성
+          Invoke("createTetrominoes", 0.1f);
+        
     }
 
     //테트로미노 생성
@@ -68,6 +70,10 @@ public class TetrisSpawner : MonoBehaviour
 
 
             targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
+            GhostTetromino = Instantiate(targetSpawn, transform.position, Quaternion.identity);
+            GhostTetromino.GetComponent<TetrisBlock>().FallTime = 0f;
+         
+
 
             if (deck.Count == Tetrominoes.Length)
             {
