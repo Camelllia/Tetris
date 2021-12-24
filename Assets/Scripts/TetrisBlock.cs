@@ -87,7 +87,11 @@ public class TetrisBlock : MonoBehaviour
             moveDown();
         }
 
+<<<<<<< Updated upstream
         if (Input.GetKey(KeyCode.DownArrow) && !arrived && Time.time - previousTime > FallTime / 14)
+=======
+        if(Time.time - previousTime > (Input.GetKey(KeyCode.DownArrow) ? FallTime/14 : FallTime * LevelManager.Instance.speed))
+>>>>>>> Stashed changes
         {
             moveDown();
             ScoreManager.Instance.score++;
@@ -243,17 +247,51 @@ public class TetrisBlock : MonoBehaviour
                 RowDown(i);//내려준다
             }
         }
+<<<<<<< Updated upstream
         
         if (cnt == 0)
         {
             ScoreManager.Instance.combo = 0;
+=======
+        //여기서 cnt값에 따라 점수 추가
+        if (cnt == 1)
+        {
+            ScoreManager.Instance.score += 100;
+            LevelManager.Instance.linecnt += 1;
+            backtoback = false;
+        }
+        else if (cnt == 2)
+        {
+            ScoreManager.Instance.score += 300;
+            LevelManager.Instance.linecnt += 2;
+            backtoback = false;
+        }
+        else if (cnt == 3)
+        {
+            ScoreManager.Instance.score += 500;
+            LevelManager.Instance.linecnt += 3;
+            backtoback = false;
+>>>>>>> Stashed changes
         }
 
         ScoreManager.Instance.CountScoreLine(cnt);
 
         if(cnt != 0)
         {
+<<<<<<< Updated upstream
             ScoreManager.Instance.combo++;
+=======
+            if (backtoback)
+            {
+                ScoreManager.Instance.score += 1200;
+            }
+            else
+            {
+                ScoreManager.Instance.score += 800;
+            }
+            LevelManager.Instance.linecnt += 4;
+            backtoback = true;
+>>>>>>> Stashed changes
         }
     }
 

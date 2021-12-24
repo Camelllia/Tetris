@@ -7,11 +7,15 @@ public class ScoreManager : MonoBehaviour
 {
     public int score;
     public int bestScore;
+<<<<<<< Updated upstream
     public int lineScore;
     public int combo;
     private bool backtoback;
     public Text scoreText;
 
+=======
+    public Text scoreText;
+>>>>>>> Stashed changes
 
     public static ScoreManager Instance
     {
@@ -43,6 +47,7 @@ public class ScoreManager : MonoBehaviour
     void Update()
     {
         scoreText.text = "Score: " + score;
+<<<<<<< Updated upstream
     }
 
     public void CountScoreLine(int i)
@@ -88,5 +93,7 @@ public class ScoreManager : MonoBehaviour
         {
             backtoback = true;
         }
+=======
+>>>>>>> Stashed changes
     }
 }
