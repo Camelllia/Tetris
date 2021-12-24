@@ -16,6 +16,7 @@ public class TetrisBlock : MonoBehaviour
     private int dropScore;
     private int cnt;
     public bool arrived;
+    public bool isGhost;
     bool isgameover;
 
 
@@ -30,6 +31,7 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
         arrived = false;
+        isGhost = false;
     }
 
     // Update is called once per frame
@@ -128,8 +130,8 @@ public class TetrisBlock : MonoBehaviour
             transform.position -= new Vector3(0, -1, 0);
             AddToGrid();
             checkForLines(); // °¡·Î ÁÙÀÌ ²Ë Ã¡´ÂÁö È®ÀÎ
-            this.enabled = false;
-            TetrisSpawn.CanHold = true; // ¹Ø¿¡ ´ê¾ÒÀ¸¹Ç·Î È¦µå °¡´ÉÇØÁü
+            this.enabled = false;    
+            TetrisSpawn.CanHold = true; // ¹Ø¿¡ ´ê¾ÒÀ¸¹Ç·Î È¦µå °¡´ÉÇØÁü                   
             if (!isgameover)
             {
                 TetrisSpawn.NewTetrominoes();
@@ -298,20 +300,23 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        foreach (Transform children in transform)
+        if (!isGhost)
         {
-            int roundedX = Mathf.RoundToInt(children.transform.position.x);
-            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+            foreach (Transform children in transform)
+            {
+                int roundedX = Mathf.RoundToInt(children.transform.position.x);
+                int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedY < 20)
-            {
-                grid[roundedX, roundedY] = children;
+                if (roundedY < 20)
+                {
+                    grid[roundedX, roundedY] = children;
+                }
+                else
+                {
+                    gameOver();
+                }
             }
-            else
-            {
-                gameOver();
-            }
-        }
+        }             
     }
 
 
