@@ -51,7 +51,6 @@ public class ScoreManager : MonoBehaviour
         switch (i)
         {
             case 0:
-                backtoback = false;
                 break;
             case 1:
                 lineScore += 100;

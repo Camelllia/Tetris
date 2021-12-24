@@ -28,7 +28,7 @@ public class TextMeshManager : MonoBehaviour
 
     public void CallLvlup()
     {
-        Instantiate(lvlup, lvlup.transform);
+        Instantiate(lvlup, transform);
     }
 
     public void CallClear(int i, int j, bool back)
@@ -60,12 +60,12 @@ public class TextMeshManager : MonoBehaviour
         {
             clear.text += "\nCOMBO " + j;
         }
-        Instantiate(clear, clear.transform);
+        Instantiate(clear, transform);
     }
 
     public void CallScore(int i, int j)
     {
         score.text = "+" + (i + j * 50) * LevelManager.Instance.level;
-        Instantiate(score, score.transform);
+        Instantiate(score, transform);
     }
 }
