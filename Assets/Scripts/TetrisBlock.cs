@@ -243,13 +243,14 @@ public class TetrisBlock : MonoBehaviour
             }
         }
         
-        ScoreManager.Instance.CountScoreLine(cnt);
-
         if (cnt == 0)
         {
             ScoreManager.Instance.combo = 0;
         }
-        else
+
+        ScoreManager.Instance.CountScoreLine(cnt);
+
+        if(cnt != 0)
         {
             ScoreManager.Instance.combo++;
         }

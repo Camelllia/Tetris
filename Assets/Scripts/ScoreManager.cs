@@ -74,7 +74,6 @@ public class ScoreManager : MonoBehaviour
                 {
                     lineScore += 800;
                 }
-                backtoback = true;
                 break;
         }
 
@@ -85,5 +84,10 @@ public class ScoreManager : MonoBehaviour
             TextMeshManager.Instance.CallScore(lineScore, combo);
         }
         score += (lineScore + combo * 50) * LevelManager.Instance.level;
+
+        if (i == 4)
+        {
+            backtoback = true;
+        }
     }
 }
