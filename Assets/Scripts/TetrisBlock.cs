@@ -31,7 +31,6 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
         arrived = false;
-        isGhost = false;
     }
 
     // Update is called once per frame
@@ -98,6 +97,11 @@ public class TetrisBlock : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             dropBlock();
+        }
+
+        if(isGhost)
+        {
+            this.enabled = true;
         }
     }
 
@@ -300,7 +304,7 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        if (!isGhost)
+        if(!isGhost)
         {
             foreach (Transform children in transform)
             {
@@ -316,7 +320,8 @@ public class TetrisBlock : MonoBehaviour
                     gameOver();
                 }
             }
-        }             
+        }
+        
     }
 
 
