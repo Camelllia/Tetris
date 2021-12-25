@@ -99,10 +99,6 @@ public class TetrisBlock : MonoBehaviour
             dropBlock();
         }
 
-        if(isGhost)
-        {
-            this.enabled = true;
-        }
     }
 
     void moveLeft()
@@ -304,24 +300,20 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        if(!isGhost)
+        foreach (Transform children in transform)
         {
-            foreach (Transform children in transform)
-            {
-                int roundedX = Mathf.RoundToInt(children.transform.position.x);
-                int roundedY = Mathf.RoundToInt(children.transform.position.y);
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-                if (roundedY < 19)
-                {
-                    grid[roundedX, roundedY] = children;
-                }
-                else
-                {
-                    gameOver();
-                }
+            if (roundedY < 19)
+            {
+                grid[roundedX, roundedY] = children;
+            }
+            else
+            {
+                gameOver();
             }
         }
-        
     }
 
 

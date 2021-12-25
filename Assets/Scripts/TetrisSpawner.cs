@@ -70,9 +70,9 @@ public class TetrisSpawner : MonoBehaviour
 
 
             targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
-            GhostTetromino = Instantiate(targetSpawn, transform.position, Quaternion.identity); // 현재 테트로미노가 생성될 때 같이 생성시킴
+            //GhostTetromino = Instantiate(targetSpawn, transform.position, Quaternion.identity); // 현재 테트로미노가 생성될 때 같이 생성시킴
             //GhostTetromino.GetComponent<TetrisBlock>().isGhost = true; // 고스트 속성 값을 true로 해주어 grid 불가능
-            GhostTetromino.GetComponent<TetrisBlock>().FallTime = 0f; // falltime이 0이라 바로 밑으로 떨어짐
+            //GhostTetromino.GetComponent<TetrisBlock>().FallTime = 0f; // falltime이 0이라 바로 밑으로 떨어짐
             
 
 
