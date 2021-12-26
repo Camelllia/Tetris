@@ -10,10 +10,10 @@ public class TetrisSpawner : MonoBehaviour
     private List<GameObject> bag;
     private HashSet<int> deck = new HashSet<int>();
     private int next;
-    GameObject nextSpawn;
-    GameObject targetSpawn;
+    public GameObject nextSpawn;
+    public GameObject targetSpawn;
     GameObject HoldBasket;
-    GameObject GhostTetromino;
+    GameObject ghostTetromino;
     bool isFirst = true;
     public bool CanHold = true;
     TetrisBlock TetrisBlock;
@@ -74,15 +74,15 @@ public class TetrisSpawner : MonoBehaviour
 
 
             targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
-            GhostTetromino = Instantiate(targetSpawn, new Vector3(targetSpawn.transform.position.x , 1, targetSpawn.transform.position.z), targetSpawn.transform.rotation);
-            GhostTetromino.GetComponent<TetrisBlock>().enabled = false;
-            GhostSRList = GhostTetromino.transform.GetComponentsInChildren<SpriteRenderer>();
-            foreach(SpriteRenderer SR in GhostSRList)
-            {
-                SR.color = new Color(1, 1, 1, 0.2f);
-            }
-            
-            
+            //GhostTetromino = Instantiate(targetSpawn, new Vector3(targetSpawn.transform.position.x , 1, targetSpawn.transform.position.z), targetSpawn.transform.rotation);
+            //GhostTetromino.GetComponent<TetrisBlock>().enabled = false;
+            //GhostSRList = GhostTetromino.transform.GetComponentsInChildren<SpriteRenderer>();
+            //foreach(SpriteRenderer SR in GhostSRList)
+            //{
+            //  SR.color = new Color(1, 1, 1, 0.2f);
+            //}
+            SpawnGhostTetromino();
+
             if (deck.Count == Tetrominoes.Length)
             {
                 deck.Clear();
@@ -100,6 +100,7 @@ public class TetrisSpawner : MonoBehaviour
             nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            
         }
         else
         {
@@ -125,6 +126,8 @@ public class TetrisSpawner : MonoBehaviour
             nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            SpawnGhostTetromino();
             
         }
     }
@@ -158,6 +161,19 @@ public class TetrisSpawner : MonoBehaviour
                 CanHold = false; // 홀드를 실행했으니 홀드를 다시 못하는 상황으로 만들어 줌
             }
         }
+    }
+
+    public void SpawnGhostTetromino()
+    {
+        if(GameObject.FindGameObjectWithTag("currentGhostTetromino") != null)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("currentGhostTetromino"));
+        }
+        
+        ghostTetromino = Instantiate(targetSpawn, targetSpawn.transform.position, Quaternion.identity);
+
+        Destroy(ghostTetromino.GetComponent<TetrisBlock>());
+        ghostTetromino.AddComponent<GhostTetromino>();
     }
 
 }

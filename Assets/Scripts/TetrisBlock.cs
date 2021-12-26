@@ -326,7 +326,7 @@ public class TetrisBlock : MonoBehaviour
 
 
     //맵 범위 내에서 움직이고 있는지 확인하는 함수
-    bool ValidMove()
+    public bool ValidMove()
     {
         foreach (Transform children in transform)
         {
@@ -342,7 +342,7 @@ public class TetrisBlock : MonoBehaviour
         return true;
     }
 
-    bool ValidRMove()
+    public bool ValidRMove()
     {
         foreach (Transform children in transform)
         {
@@ -357,7 +357,7 @@ public class TetrisBlock : MonoBehaviour
         }
         return true;
     }
-    bool ValidLMove()
+    public bool ValidLMove()
     {
         foreach (Transform children in transform)
         {
