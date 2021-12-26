@@ -5,6 +5,7 @@ using UnityEngine;
 public class TetrisSpawner : MonoBehaviour
 {
     public GameObject[] Tetrominoes;
+    SpriteRenderer[] GhostSRList;
     public List<GameObject> ListTetrominoes;
     private List<GameObject> bag;
     private HashSet<int> deck = new HashSet<int>();
@@ -15,8 +16,8 @@ public class TetrisSpawner : MonoBehaviour
     GameObject GhostTetromino;
     bool isFirst = true;
     public bool CanHold = true;
-
     TetrisBlock TetrisBlock;
+    Transform targetTransform;
     
     void Start()
     {
@@ -36,13 +37,16 @@ public class TetrisSpawner : MonoBehaviour
         {
             Hold();
         }
+
+        
     }
+
 
     //새로운 테트로미노 생성
     public void NewTetrominoes()
-    {       
-          //0.5초 마다 생성
-          Invoke("createTetrominoes", 0.1f);
+    {   
+        //0.5초 마다 생성
+        Invoke("createTetrominoes", 0.1f);
         
     }
 
@@ -70,13 +74,15 @@ public class TetrisSpawner : MonoBehaviour
 
 
             targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
-            //GhostTetromino = Instantiate(targetSpawn, transform.position, Quaternion.identity); // 현재 테트로미노가 생성될 때 같이 생성시킴
-            //GhostTetromino.GetComponent<TetrisBlock>().isGhost = true; // 고스트 속성 값을 true로 해주어 grid 불가능
-            //GhostTetromino.GetComponent<TetrisBlock>().FallTime = 0f; // falltime이 0이라 바로 밑으로 떨어짐
+            GhostTetromino = Instantiate(targetSpawn, new Vector3(targetSpawn.transform.position.x , 1, targetSpawn.transform.position.z), targetSpawn.transform.rotation);
+            GhostTetromino.GetComponent<TetrisBlock>().enabled = false;
+            GhostSRList = GhostTetromino.transform.GetComponentsInChildren<SpriteRenderer>();
+            foreach(SpriteRenderer SR in GhostSRList)
+            {
+                SR.color = new Color(1, 1, 1, 0.2f);
+            }
             
-
-
-
+            
             if (deck.Count == Tetrominoes.Length)
             {
                 deck.Clear();
