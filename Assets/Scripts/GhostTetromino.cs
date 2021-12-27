@@ -38,11 +38,10 @@ public class GhostTetromino : MonoBehaviour
 
     void FollowActiveTetromino()
     {
-        Transform currentTetrominoTransform = GameObject.FindGameObjectWithTag("currentBlock").transform;
+        Transform currentTetrominoTransform = TetrisSpawner.targetSpawn.transform;
 
         transform.position = new Vector3(currentTetrominoTransform.position.x, transform.position.y, transform.position.z);
         transform.rotation = currentTetrominoTransform.rotation;
-        
     }
 
     void MoveDown()

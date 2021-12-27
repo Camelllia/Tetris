@@ -138,7 +138,6 @@ public class TetrisBlock : MonoBehaviour
             TetrisSpawn.CanHold = true; // ¹Ø¿¡ ´ê¾ÒÀ¸¹Ç·Î È¦µå °¡´ÉÇØÁü
             tag = "Untagged";
             Destroy(GameObject.FindGameObjectWithTag("currentGhostTetromino"));
-            TetrisSpawn.isHolding = false;
             if (!isgameover)
             {
                 TetrisSpawn.NewTetrominoes();
