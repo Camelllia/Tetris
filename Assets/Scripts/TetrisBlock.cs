@@ -6,7 +6,6 @@ public class TetrisBlock : MonoBehaviour
 {
     public Vector3 RotationPoint;
     private float previousTime, previousTimeLeft, previousTimeRight;
-    private float timer;
     public float AutorepeatDelay, AutorepeatSpeed;
     public float FallTime = 0.8f;
     public static int Height = 20;
@@ -17,7 +16,6 @@ public class TetrisBlock : MonoBehaviour
     private int cnt;
     private int rotateCount;
     public bool arrived;
-    public bool isGhost;
     bool isgameover;
 
 
@@ -30,12 +28,10 @@ public class TetrisBlock : MonoBehaviour
     void Start()
     {
         tag = "currentBlock";
-        timer = 0;
         rotateCount = 15;
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
         arrived = false;
-        isGhost = false;
     }
 
     // Update is called once per frame
@@ -45,7 +41,6 @@ public class TetrisBlock : MonoBehaviour
         {
             TetrisSpawn = FindObjectOfType<TetrisSpawner>();
         }
-        timer += Time.deltaTime;
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
         if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
         {
@@ -323,24 +318,20 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        if(!isGhost)
+        foreach (Transform children in transform)
         {
-            foreach (Transform children in transform)
-            {
-                int roundedX = Mathf.RoundToInt(children.transform.position.x);
-                int roundedY = Mathf.RoundToInt(children.transform.position.y);
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-                if (roundedY < 19)
-                {
-                    grid[roundedX, roundedY] = children;
-                }
-                else
-                {
-                    gameOver();
-                }
+            if (roundedY < 19)
+            {
+                grid[roundedX, roundedY] = children;
+            }
+            else
+            {
+                gameOver();
             }
         }
-        
     }
 
 

@@ -19,10 +19,10 @@ public class GhostTetromino : MonoBehaviour
         }
     }
 
-    
+
     void Update()
     {
-        if(TetrisSpawner == null)
+        if (TetrisSpawner == null)
         {
             TetrisSpawner = FindObjectOfType<TetrisSpawner>();
         }
@@ -38,10 +38,11 @@ public class GhostTetromino : MonoBehaviour
 
     void FollowActiveTetromino()
     {
-        Transform currentTetrominoTransform = TetrisSpawner.targetSpawn.transform;
+        Transform currentTetrominoTransform = GameObject.FindGameObjectWithTag("currentBlock").transform;
 
         transform.position = new Vector3(currentTetrominoTransform.position.x, transform.position.y, transform.position.z);
         transform.rotation = currentTetrominoTransform.rotation;
+
     }
 
     void MoveDown()
