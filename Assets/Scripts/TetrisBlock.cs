@@ -20,6 +20,7 @@ public class TetrisBlock : MonoBehaviour
     bool isgameover;
 
 
+
     TetrisSpawner TetrisSpawn;
 
     [SerializeField] GameObject starParticle;
@@ -99,6 +100,8 @@ public class TetrisBlock : MonoBehaviour
         {
             dropBlock();
         }
+
+        
     }
 
     void moveLeft()
@@ -300,14 +303,14 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
-        if (!isGhost)
+        if(!isGhost)
         {
             foreach (Transform children in transform)
             {
                 int roundedX = Mathf.RoundToInt(children.transform.position.x);
                 int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-                if (roundedY < 20)
+                if (roundedY < 19)
                 {
                     grid[roundedX, roundedY] = children;
                 }
@@ -316,13 +319,14 @@ public class TetrisBlock : MonoBehaviour
                     gameOver();
                 }
             }
-        }             
+        }
+        
     }
 
 
 
     //맵 범위 내에서 움직이고 있는지 확인하는 함수
-    bool ValidMove()
+    public bool ValidMove()
     {
         foreach (Transform children in transform)
         {
@@ -338,7 +342,7 @@ public class TetrisBlock : MonoBehaviour
         return true;
     }
 
-    bool ValidRMove()
+    public bool ValidRMove()
     {
         foreach (Transform children in transform)
         {
@@ -353,7 +357,7 @@ public class TetrisBlock : MonoBehaviour
         }
         return true;
     }
-    bool ValidLMove()
+    public bool ValidLMove()
     {
         foreach (Transform children in transform)
         {
@@ -373,9 +377,7 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(3).gameObject.SetActive(true);
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
+        ScoreManager.Instance.ScoreSet("", ScoreManager.Instance.score);
     }
-
-
-
 }
