@@ -13,7 +13,7 @@ public class TetrisSpawner : MonoBehaviour
     public GameObject nextSpawn;
     public GameObject targetSpawn;
     GameObject HoldBasket;
-    public GameObject ghostTetromino;
+    GameObject ghostTetromino;
     bool isFirst = true;
     public bool CanHold = true;
     TetrisBlock TetrisBlock;
