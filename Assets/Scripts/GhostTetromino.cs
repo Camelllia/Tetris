@@ -51,20 +51,16 @@ public class GhostTetromino : MonoBehaviour
 
         if(!CheckIsVaildPosition())
         {
-            transform.position += new Vector3(0, 1, 0);
+            transform.position += new Vector3(0, 2, 0);
         }
     }
 
     bool CheckIsVaildPosition()
     {
-        foreach(Transform mino in transform)
+        if (TetrisSpawner.ghostTetromino.transform.position.y < -1)
         {
-            if (TetrisBlock.ValidMove() == false)
-                return false;
-            if (TetrisBlock.ValidLMove() == false)
-                return false;
-            if (TetrisBlock.ValidLMove() == false)
-                return false;
+            Debug.Log("false"); 
+            return false;
         }
         return true;
     }
