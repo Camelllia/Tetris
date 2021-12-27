@@ -10,14 +10,17 @@ public class TetrisSpawner : MonoBehaviour
     private int next;
     public GameObject nextSpawn;
     public GameObject targetSpawn;
-    GameObject HoldBasket;
+    public GameObject HoldBasket;
     GameObject ghostTetromino;
+   
     bool isFirst = true;
     public bool CanHold = true;
     TetrisBlock TetrisBlock;
+    public bool isHolding;
     
     void Start()
     {
+        isHolding = false;
         ListTetrominoes = new List<GameObject>();
         NewTetrominoes();
     }
@@ -70,14 +73,8 @@ public class TetrisSpawner : MonoBehaviour
 
 
             targetSpawn = Instantiate(Tetrominoes[next], transform.position, Quaternion.identity);
-            //GhostTetromino = Instantiate(targetSpawn, new Vector3(targetSpawn.transform.position.x , 1, targetSpawn.transform.position.z), targetSpawn.transform.rotation);
-            //GhostTetromino.GetComponent<TetrisBlock>().enabled = false;
-            //GhostSRList = GhostTetromino.transform.GetComponentsInChildren<SpriteRenderer>();
-            //foreach(SpriteRenderer SR in GhostSRList)
-            //{
-            //  SR.color = new Color(1, 1, 1, 0.2f);
-            //}
-            SpawnGhostTetromino();
+            
+            SpawnGhostTetromino(targetSpawn);
 
             if (deck.Count == Tetrominoes.Length)
             {
@@ -123,7 +120,7 @@ public class TetrisSpawner : MonoBehaviour
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            SpawnGhostTetromino();
+            SpawnGhostTetromino(targetSpawn);
             
         }
     }
@@ -134,7 +131,9 @@ public class TetrisSpawner : MonoBehaviour
 
         if(HoldBasket==null) // 홀드가 처음일때
         {
+            targetSpawn.tag = "Untagged";
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
+            Destroy(ghostTetromino);
             HoldBasket.transform.position = new Vector3(-5, 16, 0); // 홀드 바구니 위치로 이동
             HoldBasket.GetComponent<TetrisBlock>().enabled = false; // 홀드 값의 기능을 꺼줌
             targetSpawn = nextSpawn; // 현재 테트로미노를 다음 테트로미노에서 땡겨옴
@@ -148,8 +147,19 @@ public class TetrisSpawner : MonoBehaviour
         {
             if(CanHold) // 홀드가 가능한 상황일 때
             {
+                targetSpawn.tag = "Untagged";
+                Destroy(ghostTetromino);
+                //TempGhost = ghostTetromino;
+                //Destroy(ghostTetromino);
+                //SpawnGhostTetromino(HoldGhost);
+
+               // HoldGhost = TempGhost;
+
                 HoldBasket.transform.position = transform.position;
-                HoldBasket.GetComponent<TetrisBlock>().enabled = true; 
+                HoldBasket.tag = "currentBlock";
+                SpawnGhostTetromino(HoldBasket);
+                HoldBasket.GetComponent<TetrisBlock>().enabled = true;
+                isHolding = true;
                 HoldBasket = targetSpawn;
                 HoldBasket.transform.position = new Vector3(-5, 16,0);
                 targetSpawn.GetComponent<TetrisBlock>().enabled = false;             
@@ -159,9 +169,9 @@ public class TetrisSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnGhostTetromino()
+    public void SpawnGhostTetromino(GameObject ga)
     {        
-        ghostTetromino = Instantiate(targetSpawn, targetSpawn.transform.position, Quaternion.identity);
+        ghostTetromino = Instantiate(ga,transform.position, Quaternion.identity);
 
         Destroy(ghostTetromino.GetComponent<TetrisBlock>());
         ghostTetromino.AddComponent<GhostTetromino>();
