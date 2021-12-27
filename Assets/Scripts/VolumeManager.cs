@@ -24,7 +24,7 @@ public class VolumeManager : MonoBehaviour
     public void ChangeVolume()
     {
         AudioListener.volume = volumeSlider.value;
-        save();
+        Save();
     }
 
     private void Load()
@@ -32,7 +32,7 @@ public class VolumeManager : MonoBehaviour
         volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
     }
 
-    private void save()
+    private void Save()
     {
         PlayerPrefs.SetFloat("musicvolume", volumeSlider.value);
     }
