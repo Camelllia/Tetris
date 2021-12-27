@@ -147,7 +147,6 @@ public class TetrisBlock : MonoBehaviour
     {
         transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
 
-        Debug.Log("a");
         if (!ValidLMove() && !ValidRMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
@@ -156,8 +155,13 @@ public class TetrisBlock : MonoBehaviour
         {
             while (!ValidRMove())
             {
-                Debug.Log("R");
                 transform.position += new Vector3(-1, 0, 0);
+                if (!ValidLMove())
+                {
+                    transform.position += new Vector3(1, 0, 0);
+                    transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+                    break;
+                }
             }
             if (arrived && rotateCount > 0)
             {
@@ -167,17 +171,34 @@ public class TetrisBlock : MonoBehaviour
         }
         else if (!ValidLMove())
         {
-            Debug.Log("b");
             while (!ValidLMove())
             {
-                Debug.Log("L");
                 transform.position += new Vector3(1, 0, 0);
+                if (!ValidRMove())
+                {
+                    transform.position += new Vector3(-1, 0, 0);
+                    transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
+                    break;
+                }
             }
             if (arrived && rotateCount > 0)
             {
                 previousTime = Time.time;
                 rotateCount--;
             }
+        }
+        else if (!ValidDown())
+        {
+            while (!ValidDown())
+            {
+                transform.position += new Vector3(0, 1, 0);
+            }
+            if (arrived && rotateCount > 0)
+            {
+                previousTime = Time.time;
+                rotateCount--;
+            }
+            Debug.Log("down");
         }
     }
 
@@ -193,9 +214,14 @@ public class TetrisBlock : MonoBehaviour
         {
             while (!ValidLMove())
             {
-                Debug.Log("R");
                 transform.position += new Vector3(1, 0, 0);
-            }
+                    if (!ValidRMove())
+                    {
+                        transform.position += new Vector3(-1, 0, 0);
+                        transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+                        break;
+                    }
+                }
             if (arrived && rotateCount > 0)
             {
                 previousTime = Time.time;
@@ -206,8 +232,25 @@ public class TetrisBlock : MonoBehaviour
         {
             while (!ValidRMove())
             {
-                Debug.Log("L");
                 transform.position += new Vector3(-1, 0, 0);
+                if (!ValidLMove())
+                {
+                    transform.position += new Vector3(1, 0, 0);
+                    transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
+                    break;
+                }
+            }
+            if (arrived && rotateCount > 0)
+            {
+                previousTime = Time.time;
+                rotateCount--;
+            }
+        }
+        else if (!ValidDown())
+        {
+            while (!ValidDown())
+            {
+                transform.position += new Vector3(0, 1, 0);
             }
             if (arrived && rotateCount > 0)
             {
@@ -364,7 +407,7 @@ public class TetrisBlock : MonoBehaviour
             {
                 return false;
             }
-            else if (roundedX > 0)
+            else if (roundedX > 0 && roundedY > 0)
             {
                 if (grid[roundedX, roundedY] != null && roundedX > transform.position.x)
                 {
@@ -405,12 +448,11 @@ public class TetrisBlock : MonoBehaviour
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
-            Debug.Log("X:"+roundedX);
             if (roundedX < 0)
             {
                 return false;
             }
-            else if (roundedX < Width)
+            else if (roundedX < Width && roundedY > 0)
             {
                 if (grid[roundedX, roundedY] != null && roundedX < transform.position.x)
                 {
@@ -425,10 +467,23 @@ public class TetrisBlock : MonoBehaviour
         return true;
     }
 
-    public bool ValidUp()
+    public bool ValidDown()
     {
-        return false;
-        //À§·Î 1Ä­
+            Debug.Log("Down");
+        foreach (Transform children in transform)
+        {
+            int roundedX = Mathf.RoundToInt(children.transform.position.x);
+            int roundedY = Mathf.RoundToInt(children.transform.position.y);
+            if (roundedY <  0)
+            {
+                return false;
+            }
+            else if (grid[roundedX, roundedY] != null && roundedY < transform.position.y)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     void gameOver()
