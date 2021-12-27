@@ -7,6 +7,8 @@ public class GhostTetromino : MonoBehaviour
     TetrisSpawner TetrisSpawner;
     TetrisBlock TetrisBlock;
 
+    private int depth;
+
     void Start()
     {
         tag = "currentGhostTetromino";
@@ -38,34 +40,30 @@ public class GhostTetromino : MonoBehaviour
     {
         Transform currentTetrominoTransform = TetrisSpawner.targetSpawn.transform;
 
-        transform.position = currentTetrominoTransform.position;
+        transform.position = new Vector3(currentTetrominoTransform.position.x, transform.position.y, transform.position.z);
         transform.rotation = currentTetrominoTransform.rotation;
     }
 
     void MoveDown()
     {
-        while(CheckIsVaildPosition())
+        depth = 19;
+        for (int i = 0; i < 4; i++)
         {
-            transform.position += new Vector3(0, -1, 0);
+            for (int j = TetrisBlock.Height - 1; j >= 0; j--)
+            {
+                int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
+                int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
+                if (TetrisBlock.grid[childX, j] != null && depth > childY - j - 1)
+                {
+                    depth = childY - j - 1;
+                    break;
+                }
+                else if (j == 0 && depth > childY)
+                {
+                    depth = childY;
+                }
+            }
         }
-
-        if(!CheckIsVaildPosition())
-        {
-            transform.position += new Vector3(0, 1, 0);
-        }
-    }
-
-    bool CheckIsVaildPosition()
-    {
-        foreach(Transform mino in transform)
-        {
-            if (TetrisBlock.ValidMove() == false)
-                return false;
-            if (TetrisBlock.ValidLMove() == false)
-                return false;
-            if (TetrisBlock.ValidLMove() == false)
-                return false;
-        }
-        return true;
+        transform.position += new Vector3(0, -depth, 0);
     }
 }

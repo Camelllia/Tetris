@@ -5,9 +5,7 @@ using UnityEngine;
 public class TetrisSpawner : MonoBehaviour
 {
     public GameObject[] Tetrominoes;
-    SpriteRenderer[] GhostSRList;
     public List<GameObject> ListTetrominoes;
-    private List<GameObject> bag;
     private HashSet<int> deck = new HashSet<int>();
     private int next;
     public GameObject nextSpawn;
@@ -17,12 +15,10 @@ public class TetrisSpawner : MonoBehaviour
     bool isFirst = true;
     public bool CanHold = true;
     TetrisBlock TetrisBlock;
-    Transform targetTransform;
     
     void Start()
     {
         ListTetrominoes = new List<GameObject>();
-        bag = new List<GameObject>();
         NewTetrominoes();
     }
 
@@ -164,12 +160,7 @@ public class TetrisSpawner : MonoBehaviour
     }
 
     public void SpawnGhostTetromino()
-    {
-        if(GameObject.FindGameObjectWithTag("currentGhostTetromino") != null)
-        {
-            Destroy(GameObject.FindGameObjectWithTag("currentGhostTetromino"));
-        }
-        
+    {        
         ghostTetromino = Instantiate(targetSpawn, targetSpawn.transform.position, Quaternion.identity);
 
         Destroy(ghostTetromino.GetComponent<TetrisBlock>());

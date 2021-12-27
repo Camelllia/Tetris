@@ -11,7 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
-    private static Transform[,] grid = new Transform[Width, Height];
+    public static Transform[,] grid = new Transform[Width, Height];
 
     private int dropScore;
     private int cnt;
@@ -28,6 +28,7 @@ public class TetrisBlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        tag = "currentBlock";
         timer = 0;
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
@@ -134,7 +135,9 @@ public class TetrisBlock : MonoBehaviour
             AddToGrid();
             checkForLines(); // °¡·Î ÁÙÀÌ ²Ë Ã¡´ÂÁö È®ÀÎ
             this.enabled = false;    
-            TetrisSpawn.CanHold = true; // ¹Ø¿¡ ´ê¾ÒÀ¸¹Ç·Î È¦µå °¡´ÉÇØÁü                   
+            TetrisSpawn.CanHold = true; // ¹Ø¿¡ ´ê¾ÒÀ¸¹Ç·Î È¦µå °¡´ÉÇØÁü
+            tag = "Untagged";
+            Destroy(GameObject.FindGameObjectWithTag("currentGhostTetromino"));
             if (!isgameover)
             {
                 TetrisSpawn.NewTetrominoes();
@@ -215,7 +218,7 @@ public class TetrisBlock : MonoBehaviour
             {
                 int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
                 int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
-                if (grid[childX, j] != null && dropScore > childY - j)
+                if (grid[childX, j] != null && dropScore > childY - j - 1)
                 {
                     dropScore = childY - j - 1;
                     break;
