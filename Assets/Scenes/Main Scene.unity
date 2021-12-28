@@ -1032,7 +1032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &757457964
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2222,7 +2222,6 @@ MonoBehaviour:
   - {fileID: 6872668700414402157, guid: b7392d5b46b359c4482b23c953e6d1d4, type: 3}
   - {fileID: 8908760019456552538, guid: 87e322c1fe4276645ada3a3c8b3c7dee, type: 3}
   - {fileID: 1951382203804368706, guid: 7721d08818d4dd84f90fa122d87fcce0, type: 3}
-  ListTetrominoes: []
   nextSpawn: {fileID: 0}
   targetSpawn: {fileID: 0}
   HoldBasket: {fileID: 0}

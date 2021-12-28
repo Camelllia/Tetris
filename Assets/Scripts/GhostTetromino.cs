@@ -50,7 +50,7 @@ public class GhostTetromino : MonoBehaviour
         depth = 19;
         for (int i = 0; i < 4; i++)
         {
-            for (int j = TetrisBlock.Height - 1; j >= 0; j--)
+            for (int j = Mathf.RoundToInt(GameObject.FindGameObjectWithTag("currentBlock").transform.position.y) - 1; j >= 0; j--)
             {
                 int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
                 int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
