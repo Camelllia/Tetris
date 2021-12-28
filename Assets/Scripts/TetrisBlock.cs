@@ -11,6 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public static int Height = 20;
     public static int Width = 10;
     public static Transform[,] grid = new Transform[Width, Height];
+    List<GameObject> ListTetrominoes; 
 
     private int dropScore;
     private int cnt;
@@ -32,6 +33,7 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;
         arrived = false;
+        ListTetrominoes = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -337,6 +339,15 @@ public class TetrisBlock : MonoBehaviour
         for (int j = 0; j < Width; j++)
         {
             Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
+            ListTetrominoes.Add(grid[j, i].gameObject); // 리스트에 추가해주고           
+            foreach (GameObject value in ListTetrominoes)
+            {
+                for (int k = 0; k < ListTetrominoes.Count; k++)
+                {
+                    Instantiate(value, new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                }           
+            }
+            
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }

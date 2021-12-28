@@ -5,7 +5,6 @@ using UnityEngine;
 public class TetrisSpawner : MonoBehaviour
 {
     public GameObject[] Tetrominoes;
-    public List<GameObject> ListTetrominoes;
     private HashSet<int> deck = new HashSet<int>();
     private int next;
     public GameObject nextSpawn;
@@ -21,7 +20,6 @@ public class TetrisSpawner : MonoBehaviour
     void Start()
     {
         isHolding = false;
-        ListTetrominoes = new List<GameObject>();
         NewTetrominoes();
     }
 
@@ -176,5 +174,6 @@ public class TetrisSpawner : MonoBehaviour
         Destroy(ghostTetromino.GetComponent<TetrisBlock>());
         ghostTetromino.AddComponent<GhostTetromino>();
     }
+
 
 }

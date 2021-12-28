@@ -692,7 +692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &432528419
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,7 +1794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1259559594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2225,7 +2225,9 @@ MonoBehaviour:
   ListTetrominoes: []
   nextSpawn: {fileID: 0}
   targetSpawn: {fileID: 0}
+  HoldBasket: {fileID: 0}
   CanHold: 1
+  isHolding: 0
 --- !u!4 &1475225563
 Transform:
   m_ObjectHideFlags: 0
