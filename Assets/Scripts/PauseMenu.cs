@@ -34,19 +34,4 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
-    public void ToSettingMenu() {
-        Debug.Log("아직 미구현입니다...");
-    }
-
-    public void ToMain(){
-        Debug.Log("아직 미구현입니다...");
-        //Time.timeScale = 1f;
-        //SceneManager.LoadScene("MainMenu");
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("아직 미구현입니다...");
-        Application.Quit();
-    }
 }
