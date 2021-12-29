@@ -18,6 +18,8 @@ public class TetrisBlock : MonoBehaviour
     private int rotateCount;
     bool isgameover;
 
+    bool isdelay;
+    float time;
 
 
     TetrisSpawner TetrisSpawn;
@@ -27,10 +29,12 @@ public class TetrisBlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        time = 0;
+        isdelay = true;
         tag = "currentBlock";
         rotateCount = 15;
         AutorepeatSpeed = 0.05f;
-        AutorepeatDelay = 0.17f;
+        AutorepeatDelay = 0.17f;//0.17
         ListTetrominoes = new List<GameObject>();
     }
 
@@ -41,12 +45,30 @@ public class TetrisBlock : MonoBehaviour
         {
             TetrisSpawn = FindObjectOfType<TetrisSpawner>();
         }
+
+        if((Input.GetKeyDown(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.LeftArrow) ? FallTime / 8 : FallTime))&&isdelay)
+        {
+            StartCoroutine("DelayL");
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            isdelay = true;
+        }
+        if((Input.GetKeyDown(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && isdelay)
+        {
+            StartCoroutine("DelayR");
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            isdelay = true;
+        }
+
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
-        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)))
+        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime))&&!isdelay)
         {
             moveLeft();
         }
-        else if ((Input.GetKey(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime)))
+        else if ((Input.GetKey(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && !isdelay)
         {
             moveRight();
         }
@@ -78,6 +100,21 @@ public class TetrisBlock : MonoBehaviour
         {
             dropBlock();
         }
+    }
+
+    IEnumerator DelayL()
+    {
+        moveLeft();
+        yield return new WaitForSeconds(AutorepeatDelay);
+
+        isdelay = false;
+    }
+    IEnumerator DelayR()
+    {
+        moveRight();
+        yield return new WaitForSeconds(AutorepeatDelay);
+
+        isdelay = false;
     }
 
     void moveLeft()
