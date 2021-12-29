@@ -340,33 +340,6 @@ public class TetrisBlock : MonoBehaviour
                     Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
                 }
             }
-            else if (ListTetrominoes.Count == 20)
-            {
-                for (int k = 12; k < ListTetrominoes.Count + 12 / 2; k++)
-                {
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 2) * 10, 1), Quaternion.identity);
-                }
-            }
-            else if (ListTetrominoes.Count == 30)
-            {
-                for (int k = 12; k < ListTetrominoes.Count + 12 / 3; k++)
-                {
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 2) * 101, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 3) * 10, 1), Quaternion.identity);
-                }
-            }
-            else if (ListTetrominoes.Count == 40)
-            {
-                for (int k = 12; k < ListTetrominoes.Count + 12 / 4; k++)
-                {
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 2) * 10, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 3) * 10, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 4) * 10, 1), Quaternion.identity);
-                }
-            }
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }
