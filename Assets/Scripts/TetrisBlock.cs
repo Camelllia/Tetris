@@ -11,7 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public static int Height = 20;
     public static int Width = 10;
     public static Transform[,] grid = new Transform[Width, Height];
-    List<GameObject> ListTetrominoes; 
+    List<GameObject> ListTetrominoes;
 
     private int dropScore;
     private int cnt;
@@ -21,6 +21,7 @@ public class TetrisBlock : MonoBehaviour
     bool isdelay;
     float time;
 
+    GameObject Background;
 
     TetrisSpawner TetrisSpawn;
 
@@ -36,6 +37,7 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;//0.17
         ListTetrominoes = new List<GameObject>();
+        Background = GameObject.FindGameObjectWithTag("Background");
     }
 
     // Update is called once per frame
@@ -46,7 +48,7 @@ public class TetrisBlock : MonoBehaviour
             TetrisSpawn = FindObjectOfType<TetrisSpawner>();
         }
 
-        if((Input.GetKeyDown(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.LeftArrow) ? FallTime / 8 : FallTime))&&isdelay)
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)) && isdelay)
         {
             StartCoroutine("DelayL");
         }
@@ -54,7 +56,7 @@ public class TetrisBlock : MonoBehaviour
         {
             isdelay = true;
         }
-        if((Input.GetKeyDown(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && isdelay)
+        if ((Input.GetKeyDown(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && isdelay)
         {
             StartCoroutine("DelayR");
         }
@@ -64,7 +66,7 @@ public class TetrisBlock : MonoBehaviour
         }
 
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
-        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime))&&!isdelay)
+        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)) && !isdelay)
         {
             moveLeft();
         }
@@ -72,11 +74,11 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X))
         {
             rotateBlock();
         }
-        else if(Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.Z))
         {
             leftrotateBlock();
         }
@@ -145,7 +147,7 @@ public class TetrisBlock : MonoBehaviour
             transform.position -= new Vector3(0, -1, 0);
             AddToGrid();
             checkForLines(); // 가로 줄이 꽉 찼는지 확인
-            this.enabled = false;    
+            this.enabled = false;
             TetrisSpawn.CanHold = true; // 밑에 닿았으므로 홀드 가능해짐
             tag = "Untagged";
             Destroy(GameObject.FindGameObjectWithTag("currentGhostTetromino"));
@@ -210,7 +212,7 @@ public class TetrisBlock : MonoBehaviour
     {
         transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
 
-        if(!ValidLMove() && !ValidRMove())
+        if (!ValidLMove() && !ValidRMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
         }
@@ -298,9 +300,18 @@ public class TetrisBlock : MonoBehaviour
                 LevelManager.Instance.linecnt++;
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
+                ListTetrominoes.Clear();
+                Camera.main.transform.position += new Vector3(0, -0.5f, 0);
+                TetrisSpawn.nextSpawn.transform.position += new Vector3(0, -0.5f, 0);
+                if (TetrisSpawn.HoldBasket != null)
+                {
+                    TetrisSpawn.HoldBasket.transform.position += new Vector3(0, -0.5f, 0);
+                }
+                //Background.transform.position += new Vector3(0, 1, 0);
+
             }
         }
-        
+
         if (cnt == 0)
         {
             ScoreManager.Instance.combo = 0;
@@ -308,7 +319,7 @@ public class TetrisBlock : MonoBehaviour
 
         ScoreManager.Instance.CountScoreLine(cnt);
 
-        if(cnt != 0)
+        if (cnt != 0)
         {
             ScoreManager.Instance.combo++;
         }
@@ -331,15 +342,43 @@ public class TetrisBlock : MonoBehaviour
         for (int j = 0; j < Width; j++)
         {
             Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
-            ListTetrominoes.Add(grid[j, i].gameObject); // 리스트에 추가해주고           
-            foreach (GameObject value in ListTetrominoes)
+            ListTetrominoes.Add(grid[j, i].gameObject); // 리스트에 추가해주고
+            if (ListTetrominoes.Count == 10)
             {
                 for (int k = 0; k < ListTetrominoes.Count; k++)
                 {
-                    Instantiate(value, new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
-                }           
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Debug.Log(ListTetrominoes.Count);
+
+                }
             }
-            
+            else if (ListTetrominoes.Count == 20)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 2; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                }
+            }
+            else if (ListTetrominoes.Count == 30)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 3; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                }
+            }
+            else if (ListTetrominoes.Count == 40)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 4; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt, 1), Quaternion.identity);
+                }
+            }
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }
@@ -444,7 +483,7 @@ public class TetrisBlock : MonoBehaviour
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
-            if (roundedY <  0)
+            if (roundedY < 0)
             {
                 return false;
             }
