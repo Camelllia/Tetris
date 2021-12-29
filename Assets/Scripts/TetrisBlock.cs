@@ -486,10 +486,10 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
         if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
         {
-            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.transform.GetChild(2).gameObject.SetActive(true);
         }
     }
 }
