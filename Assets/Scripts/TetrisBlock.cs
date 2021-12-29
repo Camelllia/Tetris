@@ -300,6 +300,7 @@ public class TetrisBlock : MonoBehaviour
                 LevelManager.Instance.linecnt++;
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
+                ListTetrominoes.Clear();
                 Camera.main.transform.position += new Vector3(0, -0.5f, 0);
                 TetrisSpawn.nextSpawn.transform.position += new Vector3(0, -0.5f, 0);
                 if(TetrisSpawn.HoldBasket != null)
@@ -342,14 +343,16 @@ public class TetrisBlock : MonoBehaviour
         {
             Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
             ListTetrominoes.Add(grid[j, i].gameObject); // 리스트에 추가해주고
-            if (ListTetrominoes.Count <= 10)
+            if (ListTetrominoes.Count == 10)
             {
                 for (int k = 0; k < ListTetrominoes.Count; k++)
                 {
                     Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Debug.Log(ListTetrominoes.Count);
+                    
                 }
             }
-            else if (ListTetrominoes.Count <= 20)
+            else if (ListTetrominoes.Count == 20)
             {
                 for (int k = 0; k < ListTetrominoes.Count / 2; k++)
                 {
@@ -357,7 +360,36 @@ public class TetrisBlock : MonoBehaviour
                     Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
                 }
             }
-
+            else if (ListTetrominoes.Count == 30)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 3; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                }
+            }
+            else if (ListTetrominoes.Count == 40)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 4; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt, 1), Quaternion.identity);
+                }
+            }
+            else if (ListTetrominoes.Count == 50)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 5; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + 1, 1), Quaternion.identity);
+                }
+            }
 
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
