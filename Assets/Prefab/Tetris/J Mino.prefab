@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bcd5d9d2ee3ad9b46bfbf65f5e357b5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58ab7ad95c38fe740825b0231a5aae0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,7 +153,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bcd5d9d2ee3ad9b46bfbf65f5e357b5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58ab7ad95c38fe740825b0231a5aae0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -235,7 +235,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bcd5d9d2ee3ad9b46bfbf65f5e357b5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58ab7ad95c38fe740825b0231a5aae0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -297,8 +297,6 @@ MonoBehaviour:
   AutorepeatDelay: 0
   AutorepeatSpeed: 0
   FallTime: 0.8
-  arrived: 0
-  isGhost: 0
   starParticle: {fileID: 165734, guid: 2a29c32d97bebe2448831c9e00747866, type: 3}
 --- !u!1 &8269483378653481228
 GameObject:
@@ -371,7 +369,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bcd5d9d2ee3ad9b46bfbf65f5e357b5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58ab7ad95c38fe740825b0231a5aae0b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
