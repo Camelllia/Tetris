@@ -109,7 +109,7 @@ public class ScoreManager : MonoBehaviour
 
     public void ScoreSet()
     {
-        string currentName = newName.text;
+        string currentName = upperText.text;
         int currentScore = score;
 
         PlayerPrefs.SetString("CurrentPlayerName", currentName);

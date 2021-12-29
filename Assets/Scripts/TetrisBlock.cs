@@ -295,7 +295,6 @@ public class TetrisBlock : MonoBehaviour
             {
                 cnt++;//cnt ++해주고
                 LevelManager.Instance.linecnt++;
-                Debug.Log(ListTetrominoes.Count);
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
                 ListTetrominoes.Clear();
@@ -333,12 +332,21 @@ public class TetrisBlock : MonoBehaviour
         {
             Instantiate(starParticle, grid[j, i].gameObject.transform.position, Quaternion.identity);
             ListTetrominoes.Add(grid[j, i].gameObject); // 리스트에 추가해주고
+
+            GameObject building = GameObject.Find("Building");
+
             if (ListTetrominoes.Count == 10)
             {
-                for (int k = 12; k < ListTetrominoes.Count + 12; k++)
+                for (int k = 0; k < ListTetrominoes.Count; k++)
                 {
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
+                    GameObject floor = Instantiate(ListTetrominoes[0], new Vector3(building.transform.position.x - 5 + k, LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10, 1), Quaternion.identity);
+                    floor.transform.parent = building.transform;
+                    floor.transform.localScale *= building.transform.localScale.x;
+                    floor.transform.position *= building.transform.localScale.x;
+                    floor.transform.position += new Vector3(building.transform.localScale.x * (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10) * 0.85f, 0, 0);
                 }
+                building.transform.localScale *= (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10 + 20 - ListTetrominoes.Count / 10);
+                building.transform.localScale /= (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10 + 19 + ListTetrominoes.Count / 10);
             }
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
@@ -478,7 +486,10 @@ public class TetrisBlock : MonoBehaviour
     {
         isgameover = true;
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
-        ScoreManager.Instance.ScoreSet();
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+        if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
+        {
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
+        }
     }
 }
