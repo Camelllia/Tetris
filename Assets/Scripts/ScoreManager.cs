@@ -9,14 +9,22 @@ public class ScoreManager : MonoBehaviour
     public int lineScore;
     public int combo;
     private bool backtoback;
+    public InputField newName;
+    public Text upperText;
     public Text scoreText;
+    public Text currentScoreText;
+    public string[] bestName = new string[5];
+    public int[] bestScore = new int[5];
+    public Text highNameText0;
+    public Text highNameText1;
+    public Text highNameText2;
+    public Text highNameText3;
+    public Text highNameText4;
+    public Text highScoreText0;
     public Text highScoreText1;
     public Text highScoreText2;
     public Text highScoreText3;
     public Text highScoreText4;
-    public Text highScoreText5;
-    private int[] bestScore = new int[5];
-    private string[] bestName = new string[5];
 
     public static ScoreManager Instance
     {
@@ -42,13 +50,16 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         backtoback = false;
         combo = 0;
-        ScoreSet("", bestScore[0]);
+        ScoreSet();
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreText.text = "Score: " + score;
+        currentScoreText.text = "NEW HIGH SCORE!\n" + score + "\nENTER YOUR INITIALS:";
+        newName.characterLimit = 3;
+        upperText.text = newName.text.ToUpper();
     }
 
     public void CountScoreLine(int i)
@@ -96,13 +107,16 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void ScoreSet(string currentName, int currentScore)
+    public void ScoreSet()
     {
+        string currentName = newName.text;
+        int currentScore = score;
+
         PlayerPrefs.SetString("CurrentPlayerName", currentName);
         PlayerPrefs.SetInt("CurrentPlayerScore", currentScore);
 
-        int tmpScore = 0;
         string tmpName = "";
+        int tmpScore = 0;
 
         for (int i = 0; i < 5; i++)
         {
@@ -111,30 +125,35 @@ public class ScoreManager : MonoBehaviour
 
             while (bestScore[i] < currentScore)
             {
-                //자리바꾸기!
-                tmpScore = bestScore[i];
+                //자리바꾸기
                 tmpName = bestName[i];
-                bestScore[i] = currentScore;
+                tmpScore = bestScore[i];
                 bestName[i] = currentName;
+                bestScore[i] = currentScore;
 
                 //랭킹에 저장
+                PlayerPrefs.SetString(i + "BestName", currentName);
                 PlayerPrefs.SetInt(i + "BestScore", currentScore);
-                PlayerPrefs.SetString(i.ToString() + "BestName", currentName);
 
                 //다음 반복을 위한 준비
-                currentScore = tmpScore;
                 currentName = tmpName;
+                currentScore = tmpScore;
             }
         }
         for (int i = 0; i < 5; i++)
         {
+            PlayerPrefs.SetString(i + "BestName", bestName[i]);
             PlayerPrefs.SetInt(i + "BestScore", bestScore[i]);
-            PlayerPrefs.SetString(i.ToString() + "BestName", bestName[i]);
-            highScoreText1.text = "" + bestScore[0];
-            highScoreText2.text = "" + bestScore[1];
-            highScoreText3.text = "" + bestScore[2];
-            highScoreText4.text = "" + bestScore[3];
-            highScoreText5.text = "" + bestScore[4];
+            highNameText0.text = "" + bestName[0];
+            highNameText1.text = "" + bestName[1];
+            highNameText2.text = "" + bestName[2];
+            highNameText3.text = "" + bestName[3];
+            highNameText4.text = "" + bestName[4];
+            highScoreText0.text = "" + bestScore[0];
+            highScoreText1.text = "" + bestScore[1];
+            highScoreText2.text = "" + bestScore[2];
+            highScoreText3.text = "" + bestScore[3];
+            highScoreText4.text = "" + bestScore[4];
         }
     }
 }
