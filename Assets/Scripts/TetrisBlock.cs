@@ -379,6 +379,18 @@ public class TetrisBlock : MonoBehaviour
                     Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt, 1), Quaternion.identity);
                 }
             }
+            else if (ListTetrominoes.Count == 50)
+            {
+                for (int k = 0; k < ListTetrominoes.Count / 5; k++)
+                {
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 1, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt, 1), Quaternion.identity);
+                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt + 1, 1), Quaternion.identity);
+                }
+            }
+
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }
