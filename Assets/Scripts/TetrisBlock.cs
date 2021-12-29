@@ -302,10 +302,7 @@ public class TetrisBlock : MonoBehaviour
                 RowDown(i);//내려준다
                 Camera.main.transform.position += new Vector3(0, -0.5f, 0);
                 TetrisSpawn.nextSpawn.transform.position += new Vector3(0, -0.5f, 0);
-                if(TetrisSpawn.HoldBasket != null)
-                {
-                    TetrisSpawn.HoldBasket.transform.position += new Vector3(0, -0.5f, 0);
-                }       
+                TetrisSpawn.HoldBasket.transform.position += new Vector3(0, -0.5f, 0);
                 //Background.transform.position += new Vector3(0, 1, 0);
 
             }
@@ -354,7 +351,6 @@ public class TetrisBlock : MonoBehaviour
                 for (int k = 0; k < ListTetrominoes.Count / 2; k++)
                 {
                     Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 3, 1), Quaternion.identity);
-                    Instantiate(ListTetrominoes[0], new Vector3(k, LevelManager.Instance.linecnt - 2, 1), Quaternion.identity);
                 }
             }
 
