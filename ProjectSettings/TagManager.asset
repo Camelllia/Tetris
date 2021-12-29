@@ -7,7 +7,6 @@ TagManager:
   - GameOver
   - currentGhostTetromino
   - currentBlock
-  - Background
   layers:
   - Default
   - TransparentFX
