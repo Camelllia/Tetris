@@ -7,6 +7,7 @@ public class TetrisBlock : MonoBehaviour
     public Vector3 RotationPoint;
     private float previousTime, previousTimeLeft, previousTimeRight;
     public float AutorepeatDelay, AutorepeatSpeed;
+    public bool isRKey, isLKey;
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
@@ -29,11 +30,13 @@ public class TetrisBlock : MonoBehaviour
     void Start()
     {
         time = 0;
+        isRKey = true;
+        isLKey = true;
         isdelay = true;
         tag = "currentBlock";
         rotateCount = 15;
         AutorepeatSpeed = 0.05f;
-        AutorepeatDelay = 0.17f;//0.17
+        AutorepeatDelay = 0.5f;//0.17
         ListTetrominoes = new List<GameObject>();
     }
 
@@ -45,29 +48,81 @@ public class TetrisBlock : MonoBehaviour
             TetrisSpawn = FindObjectOfType<TetrisSpawner>();
         }
 
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)) && isdelay)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            isLKey = true;
+            isRKey = false;
             StartCoroutine("DelayL");
         }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {
+            isLKey = false;
+            isRKey = true;
+            isdelay = true;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            isdelay = true;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            isLKey = true;
+            isRKey = false;
+            isdelay = true;
+        }
+
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
             isdelay = true;
         }
-        if ((Input.GetKeyDown(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKeyDown(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && isdelay)
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            isRKey = true;
+            isLKey = false;
             StartCoroutine("DelayR");
         }
+
+        if (Input.GetKeyUp(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+        {
+            isRKey = false;
+            isLKey = true;
+            isdelay = true;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            isdelay = true;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            isRKey = true;
+            isLKey = false;
+            isdelay = true;
+        }
+
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
             isdelay = true;
         }
 
+        if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+        {
+            isRKey = false;
+            isLKey = false;
+            isdelay = true;
+        }
+
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
-        if ((Input.GetKey(KeyCode.LeftArrow) && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime)) && !isdelay)
+        if (isLKey && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime * 100) && !isdelay && !isRKey)
         {
             moveLeft();
         }
-        else if ((Input.GetKey(KeyCode.RightArrow) && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime)) && !isdelay)
+        else if (isRKey && Time.time - previousTimeRight + AutorepeatSpeed > (Input.GetKey(KeyCode.RightArrow) ? FallTime / 8 : FallTime * 100) && !isdelay && !isLKey)
         {
             moveRight();
         }
@@ -105,14 +160,26 @@ public class TetrisBlock : MonoBehaviour
     {
         moveLeft();
         yield return new WaitForSeconds(AutorepeatDelay);
-
+        if (!Input.GetKey(KeyCode.LeftArrow))
+        {
+            isLKey = false;
+            isRKey = true;
+            isdelay = true;
+            StopCoroutine("DelayL");
+        }
         isdelay = false;
     }
     IEnumerator DelayR()
     {
         moveRight();
         yield return new WaitForSeconds(AutorepeatDelay);
-
+        if (!Input.GetKey(KeyCode.RightArrow))
+        {
+            isRKey = false;
+            isLKey = true;
+            isdelay = true;
+            StopCoroutine("DelayR");
+        }
         isdelay = false;
     }
 
