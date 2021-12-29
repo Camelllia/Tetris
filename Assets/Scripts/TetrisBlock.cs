@@ -515,6 +515,6 @@ public class TetrisBlock : MonoBehaviour
         isgameover = true;
         Debug.Log("gameover");
         GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
-        ScoreManager.Instance.ScoreSet("", ScoreManager.Instance.score);
+        ScoreManager.Instance.ScoreSet();
     }
 }
