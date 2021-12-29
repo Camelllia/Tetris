@@ -21,8 +21,6 @@ public class TetrisBlock : MonoBehaviour
     bool isdelay;
     float time;
 
-    GameObject Background;
-
     TetrisSpawner TetrisSpawn;
 
     [SerializeField] GameObject starParticle;
@@ -37,7 +35,6 @@ public class TetrisBlock : MonoBehaviour
         AutorepeatSpeed = 0.05f;
         AutorepeatDelay = 0.17f;//0.17
         ListTetrominoes = new List<GameObject>();
-        Background = GameObject.FindGameObjectWithTag("Background");
     }
 
     // Update is called once per frame
