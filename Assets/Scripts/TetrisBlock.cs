@@ -298,14 +298,6 @@ public class TetrisBlock : MonoBehaviour
                 DeleteLine(i);//줄을 삭제하고
                 RowDown(i);//내려준다
                 ListTetrominoes.Clear();
-                Camera.main.transform.position += new Vector3(0, -0.5f, 0);
-                TetrisSpawn.nextSpawn.transform.position += new Vector3(0, -0.5f, 0);
-                if (TetrisSpawn.HoldBasket != null)
-                {
-                    TetrisSpawn.HoldBasket.transform.position += new Vector3(0, -0.5f, 0);
-                }
-                //Background.transform.position += new Vector3(0, 1, 0);
-
             }
         }
 
