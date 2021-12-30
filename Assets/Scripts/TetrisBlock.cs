@@ -53,13 +53,6 @@ public class TetrisBlock : MonoBehaviour
             StartCoroutine("DelayL");
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-        {
-            isLKey = false;
-            isRKey = true;
-            isdelay = true;
-        }
-
         if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKeyDown(KeyCode.RightArrow))
         {
             isdelay = true;
@@ -69,26 +62,21 @@ public class TetrisBlock : MonoBehaviour
         {
             isLKey = true;
             isRKey = false;
-            isdelay = true;
+            //isdelay = true;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            isdelay = true;
+            isLKey = false;
+            StopCoroutine("DelayL");
         }
+
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             isRKey = true;
             isLKey = false;
             StartCoroutine("DelayR");
-        }
-
-        if (Input.GetKeyUp(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            isRKey = false;
-            isLKey = true;
-            isdelay = true;
         }
 
         if (Input.GetKey(KeyCode.RightArrow) && Input.GetKeyDown(KeyCode.LeftArrow))
@@ -100,21 +88,20 @@ public class TetrisBlock : MonoBehaviour
         {
             isRKey = true;
             isLKey = false;
-            isdelay = true;
+            //isdelay = true;
         }
 
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            isdelay = true;
+            isRKey = false;
+            StopCoroutine("DelayR");
         }
 
         if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
-            isRKey = false;
-            isLKey = false;
             isdelay = true;
         }
-        
+
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
         if (isLKey && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime * 100) && !isdelay && !isRKey)
         {
@@ -124,7 +111,7 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X))&& GameObject.FindGameObjectWithTag("currentBlock").name!= "O Mino(Clone)")
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X)) && GameObject.FindGameObjectWithTag("currentBlock").name != "O Mino(Clone)")
         {
             rotateBlock();
         }
@@ -338,7 +325,7 @@ public class TetrisBlock : MonoBehaviour
             rotateCount--;
         }
 
-                foreach (Transform children in transform)
+        foreach (Transform children in transform)
         {
             children.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
@@ -479,7 +466,7 @@ public class TetrisBlock : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            if (grid[i,18] != null || grid [i,19] != null)
+            if (grid[i, 18] != null || grid[i, 19] != null)
             {
                 gameOver();
                 break;
