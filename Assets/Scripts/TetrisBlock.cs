@@ -23,6 +23,7 @@ public class TetrisBlock : MonoBehaviour
 
     TetrisSpawner TetrisSpawn;
 
+
     [SerializeField] GameObject starParticle;
 
     // Start is called before the first frame update
@@ -387,7 +388,11 @@ public class TetrisBlock : MonoBehaviour
         {
             ScoreManager.Instance.combo = 0;
         }
+        else
+        {
 
+            GameObject.Find("SoundN").GetComponent<AudioSource>().Play();
+        }
         ScoreManager.Instance.CountScoreLine(cnt);
 
         if (cnt != 0)
@@ -453,6 +458,8 @@ public class TetrisBlock : MonoBehaviour
 
     void AddToGrid()
     {
+
+        GameObject.Find("SoundD").GetComponent<AudioSource>().Play();
         foreach (Transform children in transform)
         {
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
