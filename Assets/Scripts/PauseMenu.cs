@@ -6,15 +6,18 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuCanvas;
+
+    
+  
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (GameIsPaused && (GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(10).gameObject.activeSelf == false))
             {
                 Resume();
             }
-            else
+            else if(GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(10).gameObject.activeSelf==false)
             {
                 Pause();
             }
@@ -34,4 +37,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
+
+    
+
 }
