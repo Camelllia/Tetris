@@ -232,10 +232,6 @@ public class TetrisBlock : MonoBehaviour
         if (!ValidLMove() && !ValidRMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
-            foreach (Transform children in transform)
-            {
-                children.transform.eulerAngles += new Vector3(0, 0, -90);
-            }
         }
         else if (!ValidRMove())
         {
@@ -246,10 +242,6 @@ public class TetrisBlock : MonoBehaviour
                 {
                     transform.position += new Vector3(1, 0, 0);
                     transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
-                    foreach (Transform children in transform)
-                    {
-                        children.transform.eulerAngles += new Vector3(0, 0, -90);
-                    }
                     break;
                 }
             }
@@ -263,10 +255,6 @@ public class TetrisBlock : MonoBehaviour
                 {
                     transform.position += new Vector3(-1, 0, 0);
                     transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), 90);
-                    foreach (Transform children in transform)
-                    {
-                        children.transform.eulerAngles += new Vector3(0, 0, -90);
-                    }
                     break;
                 }
             }
@@ -283,6 +271,11 @@ public class TetrisBlock : MonoBehaviour
         {
             previousTime = Time.time;
             rotateCount--;
+        }
+
+        foreach (Transform children in transform)
+        {
+            children.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
@@ -297,10 +290,6 @@ public class TetrisBlock : MonoBehaviour
         if (!ValidLMove() && !ValidRMove())
         {
             transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
-            foreach (Transform children in transform)
-            {
-                children.transform.eulerAngles += new Vector3(0, 0, 90);
-            }
         }
         else if (!ValidLMove())
         {
@@ -311,10 +300,6 @@ public class TetrisBlock : MonoBehaviour
                 {
                     transform.position += new Vector3(-1, 0, 0);
                     transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
-                    foreach (Transform children in transform)
-                    {
-                        children.transform.eulerAngles += new Vector3(0, 0, 90);
-                    }
                     break;
                 }
             }
@@ -328,10 +313,6 @@ public class TetrisBlock : MonoBehaviour
                 {
                     transform.position += new Vector3(1, 0, 0);
                     transform.RotateAround(transform.TransformPoint(RotationPoint), new Vector3(0, 0, 1), -90);
-                    foreach (Transform children in transform)
-                    {
-                        children.transform.eulerAngles += new Vector3(0, 0, 90);
-                    }
                     break;
                 }
             }
@@ -348,6 +329,11 @@ public class TetrisBlock : MonoBehaviour
         {
             previousTime = Time.time;
             rotateCount--;
+        }
+
+        foreach (Transform children in transform)
+        {
+            children.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 
