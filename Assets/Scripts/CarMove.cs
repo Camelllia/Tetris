@@ -22,11 +22,11 @@ public class CarMove : MonoBehaviour
         SR = this.GetComponent<SpriteRenderer>();
         if(dir == Vector2.right)
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+            transform.Translate(dir * speed * Time.deltaTime);
         }  
         else if(dir == Vector2.left)
         {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
+            transform.Translate(dir * speed * Time.deltaTime);
         }
         Debug.Log(this.transform.position.x);
         DirChange();
@@ -36,27 +36,12 @@ public class CarMove : MonoBehaviour
     {
         if (this.transform.position.x > 30)
         {
-            if(this.name == "Car1")
-            {
-                SR.flipX = true;
-            }
-            else
-            {
-                SR.flipX = false;
-            }     
+            SR.flipX = false;
             dir = Vector2.left;
         }
         else if (this.transform.position.x < 15)
         {
-            if(this.name == "Car1")
-            {
-                SR.flipX = false;
-            }
-            else
-            {
-                SR.flipX = true;
-            }
-            
+            SR.flipX = true;     
             dir = Vector2.right;
         }
     }
