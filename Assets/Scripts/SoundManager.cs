@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
 {
     AudioSource audioSource;
     public GameObject mana;
+    public GameObject xUI;
 
     bool isplaying;
     // Start is called before the first frame update
@@ -13,10 +14,9 @@ public class SoundManager : MonoBehaviour
     {
         audioSource = mana.GetComponent<AudioSource>();
         isplaying = true;
-        audioSource.Play();
         audioSource.loop=true;
         audioSource.pitch = 1;
-        audioSource.volume = 1;
+        audioSource.volume = 0.1f;
 
 
     }
@@ -32,10 +32,12 @@ public class SoundManager : MonoBehaviour
         if (isplaying)
         {
             audioSource.Pause();
+            xUI.SetActive(true);
         }
         else if(!isplaying)
         {
             audioSource.UnPause();
+            xUI.SetActive(false);
         }
 
         isplaying = !isplaying;
