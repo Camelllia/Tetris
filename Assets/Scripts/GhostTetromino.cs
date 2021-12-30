@@ -43,6 +43,10 @@ public class GhostTetromino : MonoBehaviour
         transform.position = new Vector3(currentTetrominoTransform.position.x, transform.position.y, transform.position.z);
         transform.rotation = currentTetrominoTransform.rotation;
 
+        foreach (Transform children in transform)
+        {
+            children.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 
     void MoveDown()
