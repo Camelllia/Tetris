@@ -296,6 +296,8 @@ MonoBehaviour:
   RotationPoint: {x: 0, y: 0, z: 0}
   AutorepeatDelay: 0
   AutorepeatSpeed: 0
+  isRKey: 0
+  isLKey: 0
   FallTime: 0.8
   starParticle: {fileID: 165734, guid: 2a29c32d97bebe2448831c9e00747866, type: 3}
 --- !u!1 &7552189692279649702
