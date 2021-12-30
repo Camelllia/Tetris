@@ -11,7 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public float FallTime = 0.8f;
     public static int Height = 20;
     public static int Width = 10;
-    public static Transform[,] grid = new Transform[Width, Height];
+    public static Transform[,] grid = new Transform[Width, Height+2];
     List<GameObject> ListTetrominoes;
 
     private int dropScore;
@@ -442,7 +442,7 @@ public class TetrisBlock : MonoBehaviour
 
     void RowDown(int i)
     {
-        for (int y = i; y < Height; y++)
+        for (int y = i; y < Height+2; y++)
         {
             for (int j = 0; j < Width; j++)
             {
@@ -465,7 +465,7 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedY < 21)
+            if (roundedY < 22)
             {
                 grid[roundedX, roundedY] = children;
             }
@@ -473,7 +473,7 @@ public class TetrisBlock : MonoBehaviour
 
         for (int i = 0; i < 10; i++)
         {
-            if (grid[i, 18] != null || grid[i, 19] != null)
+            if (grid[i, 20] != null|| grid[i, 21] != null)
             {
                 gameOver();
                 break;
@@ -489,7 +489,7 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height || grid[roundedX, roundedY] != null)
+            if (roundedX < 0 || roundedX >= Width || roundedY < 0 || roundedY >= Height+2 || grid[roundedX, roundedY] != null)
             {
                 return false;
             }
@@ -581,7 +581,7 @@ public class TetrisBlock : MonoBehaviour
         isgameover = true;
         for (int i = 0; i < 10; i++)
         {
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < 22; j++)
             {
                 if (grid[i, j] != null)
                 {
