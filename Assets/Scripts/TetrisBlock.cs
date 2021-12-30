@@ -602,15 +602,6 @@ public class TetrisBlock : MonoBehaviour
         }
         StartCoroutine("RoofMove");
         Debug.Log("gameover");
-        //GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
-        for (int i = 7; i < 12; i++)
-        {
-            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
-        }
-        if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
-        {
-            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
-        }
     }
 
     IEnumerator RoofMove()
@@ -624,9 +615,21 @@ public class TetrisBlock : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             Vector3.Distance(roof.transform.position, new Vector3(building.transform.position.x, 0, 0));
-            roof.transform.position = new Vector3(Mathf.Lerp(roof.transform.position.x, building.transform.position.x + 1, 0.1f), Mathf.Lerp(roof.transform.position.y, building.gameObject.transform.GetChild(0).transform.localScale.x * ((LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10) * 2 + 1), 0.1f), 0);
+            roof.transform.position = new Vector3(Mathf.Lerp(roof.transform.position.x, building.gameObject.transform.GetChild(0).transform.position.x, 0.1f), Mathf.Lerp(roof.transform.position.y, ((building.transform.childCount - 1) / 10 + 1) * building.transform.localScale.x, 0.1f), 0);
             roof.transform.localScale = new Vector3(1, 1, 1) * Mathf.Lerp(roof.transform.localScale.x, building.transform.localScale.x, 0.1f);
             yield return new WaitForSeconds(0.02f);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+        for (int i = 7; i < 12; i++)
+        {
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
+        }
+        if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
+        {
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
         }
     }
 }
