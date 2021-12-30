@@ -445,7 +445,7 @@ public class TetrisBlock : MonoBehaviour
                     floor.transform.parent = building.transform;
                     floor.transform.localScale *= building.transform.localScale.x;
                     floor.transform.position *= building.transform.localScale.x;
-                    floor.transform.position += new Vector3(building.transform.localScale.x * (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10) * 0.85f, 0, 0);
+                    floor.transform.position += new Vector3(building.transform.localScale.x * (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10) * 1.09f, 0, 0);
                 }
                 building.transform.localScale *= (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10 + 20 - ListTetrominoes.Count / 10);
                 building.transform.localScale /= (LevelManager.Instance.linecnt + (LevelManager.Instance.level - 1) * 10 + 19 + ListTetrominoes.Count / 10);
@@ -478,16 +478,18 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedY > 18)
+            if (roundedY < 21)
             {
                 grid[roundedX, roundedY] = children;
+            }
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (grid[i,18] != null || grid [i,19] != null)
+            {
                 gameOver();
                 break;
-            }
-
-            if (roundedY < 20)
-            {
-                grid[roundedX, roundedY] = children;
             }
         }
     }
@@ -614,7 +616,6 @@ public class TetrisBlock : MonoBehaviour
         }
         for (int i = 0; i < 100; i++)
         {
-            Vector3.Distance(roof.transform.position, new Vector3(building.transform.position.x, 0, 0));
             roof.transform.position = new Vector3(Mathf.Lerp(roof.transform.position.x, building.gameObject.transform.GetChild(0).transform.position.x, 0.1f), Mathf.Lerp(roof.transform.position.y, ((building.transform.childCount - 1) / 10 + 1) * building.transform.localScale.x, 0.1f), 0);
             roof.transform.localScale = new Vector3(1, 1, 1) * Mathf.Lerp(roof.transform.localScale.x, building.transform.localScale.x, 0.1f);
             yield return new WaitForSeconds(0.02f);
