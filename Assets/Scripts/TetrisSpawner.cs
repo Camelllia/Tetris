@@ -43,7 +43,7 @@ public class TetrisSpawner : MonoBehaviour
     public void NewTetrominoes()
     {
         //0.5초 마다 생성
-        Invoke("createTetrominoes", 0.1f);
+        Invoke("createTetrominoes", 0.01f);
 
     }
 
@@ -127,7 +127,7 @@ public class TetrisSpawner : MonoBehaviour
     void Hold()
     {
 
-        if (HoldBasket == null) // 홀드가 처음일때
+        if (HoldBasket == null && CanHold) // 홀드가 처음일때
         {
             targetSpawn.tag = "Untagged";
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
