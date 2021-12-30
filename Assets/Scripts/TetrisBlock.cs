@@ -362,14 +362,14 @@ public class TetrisBlock : MonoBehaviour
         {
             int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
             int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
+            if (childY == 0)
+            {
+                dropScore = 0;
+                break;
+            }
             for (int j = childY - 1; j >= 0; j--)
             {
-                if (j == 0 && Arrived())
-                {
-                    dropScore = 0;
-                    break;
-                }
-                else if (grid[childX, j] != null && dropScore > childY - j - 1)
+                if (grid[childX, j] != null && dropScore > childY - j - 1)
                 {
                     dropScore = childY - j - 1;
                     break;
@@ -602,7 +602,27 @@ public class TetrisBlock : MonoBehaviour
         }
         StartCoroutine("RoofMove");
         Debug.Log("gameover");
-        //GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+    }
+
+    IEnumerator RoofMove()
+    {
+        GameObject building = GameObject.Find("Building");
+        GameObject roof = GameObject.Find("Roof");
+        foreach (Transform children in transform)
+        {
+            children.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        for (int i = 0; i < 100; i++)
+        {
+            Vector3.Distance(roof.transform.position, new Vector3(building.transform.position.x, 0, 0));
+            roof.transform.position = new Vector3(Mathf.Lerp(roof.transform.position.x, building.gameObject.transform.GetChild(0).transform.position.x, 0.1f), Mathf.Lerp(roof.transform.position.y, ((building.transform.childCount - 1) / 10 + 1) * building.transform.localScale.x, 0.1f), 0);
+            roof.transform.localScale = new Vector3(1, 1, 1) * Mathf.Lerp(roof.transform.localScale.x, building.transform.localScale.x, 0.1f);
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        yield return new WaitForSeconds(3f);
+
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
         for (int i = 7; i < 12; i++)
         {
             GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
@@ -610,18 +630,6 @@ public class TetrisBlock : MonoBehaviour
         if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
         {
             GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
-        }
-    }
-
-    IEnumerator RoofMove()
-    {
-        GameObject building = GameObject.Find("Building");
-        GameObject roof = GameObject.Find("Roof");
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3.Distance(GameObject.Find("Roof").transform.position, new Vector3(building.transform.position.x, 0, 0));
-            roof.transform.localScale = new Vector3(1, 1, 1) * Mathf.Lerp(1, building.transform.localScale.x, 0.1f);
-            yield return new WaitForSeconds(0.02f);
         }
     }
 }
