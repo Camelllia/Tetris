@@ -34,7 +34,7 @@ public class TetrisBlock : MonoBehaviour
         tag = "currentBlock";
         rotateCount = 15;
         AutorepeatSpeed = 0.05f;
-        AutorepeatDelay = 0.5f;//0.17
+        AutorepeatDelay = 0.17f;//0.17
         ListTetrominoes = new List<GameObject>();
     }
 
@@ -473,13 +473,16 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
 
-            if (roundedY < 19)
+            if (roundedY > 18)
             {
                 grid[roundedX, roundedY] = children;
-            }
-            else
-            {
                 gameOver();
+                break;
+            }
+
+            if (roundedY < 20)
+            {
+                grid[roundedX, roundedY] = children;
             }
         }
     }
@@ -582,11 +585,32 @@ public class TetrisBlock : MonoBehaviour
     void gameOver()
     {
         isgameover = true;
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 20; j++)
+            {
+                if (grid[i, j] != null)
+                {
+                    grid[i, j].transform.parent = GameObject.Find("Roof").transform;
+                }
+            }
+        }
+        StartCoroutine("RoofMove");
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.SetActive(true);
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+        for (int i = 7; i < 12; i++)
+        {
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
+        }
         if (ScoreManager.Instance.bestScore[4] < ScoreManager.Instance.score)
         {
-            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(4).gameObject.transform.GetChild(2).gameObject.SetActive(true);
+            GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(true);
         }
+    }
+
+    IEnumerator RoofMove()
+    {
+        Vector3.Distance(GameObject.Find("Roof").transform.position, new Vector3(GameObject.Find("Building").transform.position.x, 0, 0));
+        yield return new WaitForSeconds(AutorepeatDelay);
     }
 }

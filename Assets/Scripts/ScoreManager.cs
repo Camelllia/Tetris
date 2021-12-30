@@ -155,5 +155,7 @@ public class ScoreManager : MonoBehaviour
             highScoreText3.text = "" + bestScore[3];
             highScoreText4.text = "" + bestScore[4];
         }
+
+        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.transform.GetChild(2).gameObject.SetActive(false);
     }
 }
