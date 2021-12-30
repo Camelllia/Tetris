@@ -133,6 +133,7 @@ public class TetrisSpawner : MonoBehaviour
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
             Destroy(ghostTetromino);
             HoldBasket.transform.position = new Vector3(-5, 16, 0); // 홀드 바구니 위치로 이동
+            HoldBasket.transform.rotation = Quaternion.Euler(0, 0, 0);
             HoldBasket.GetComponent<TetrisBlock>().enabled = false; // 홀드 값의 기능을 꺼줌
             targetSpawn = nextSpawn; // 현재 테트로미노를 다음 테트로미노에서 땡겨옴
             targetSpawn.transform.position = transform.position; // 스폰 위치로 이동
@@ -160,6 +161,7 @@ public class TetrisSpawner : MonoBehaviour
                 isHolding = true;
                 HoldBasket = targetSpawn;
                 HoldBasket.transform.position = new Vector3(-5, 16, 0);
+                HoldBasket.transform.rotation = Quaternion.Euler(0, 0, 0);
                 targetSpawn.GetComponent<TetrisBlock>().enabled = false;
                 HoldBasket.transform.position = targetSpawn.transform.position;
                 CanHold = false; // 홀드를 실행했으니 홀드를 다시 못하는 상황으로 만들어 줌
