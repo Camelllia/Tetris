@@ -360,11 +360,16 @@ public class TetrisBlock : MonoBehaviour
         //가장 작은 값이랑*2 스코어 플러스
         for (int i = 0; i < 4; i++)
         {
-            for (int j = Height - 1; j >= 0; j--)
+            int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
+            int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
+            for (int j = childY - 1; j >= 0; j--)
             {
-                int childX = Mathf.RoundToInt(this.transform.GetChild(i).position.x);
-                int childY = Mathf.RoundToInt(this.transform.GetChild(i).position.y);
-                if (grid[childX, j] != null && dropScore > childY - j - 1)
+                if (j == 0 && Arrived())
+                {
+                    dropScore = 0;
+                    break;
+                }
+                else if (grid[childX, j] != null && dropScore > childY - j - 1)
                 {
                     dropScore = childY - j - 1;
                     break;
@@ -597,7 +602,7 @@ public class TetrisBlock : MonoBehaviour
         }
         StartCoroutine("RoofMove");
         Debug.Log("gameover");
-        GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
+        //GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
         for (int i = 7; i < 12; i++)
         {
             GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
@@ -610,7 +615,13 @@ public class TetrisBlock : MonoBehaviour
 
     IEnumerator RoofMove()
     {
-        Vector3.Distance(GameObject.Find("Roof").transform.position, new Vector3(GameObject.Find("Building").transform.position.x, 0, 0));
-        yield return new WaitForSeconds(AutorepeatDelay);
+        GameObject building = GameObject.Find("Building");
+        GameObject roof = GameObject.Find("Roof");
+        for (int i = 0; i < 20; i++)
+        {
+            Vector3.Distance(GameObject.Find("Roof").transform.position, new Vector3(building.transform.position.x, 0, 0));
+            roof.transform.localScale = new Vector3(1, 1, 1) * Mathf.Lerp(1, building.transform.localScale.x, 0.1f);
+            yield return new WaitForSeconds(0.02f);
+        }
     }
 }
