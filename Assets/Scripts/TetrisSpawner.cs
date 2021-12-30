@@ -88,7 +88,7 @@ public class TetrisSpawner : MonoBehaviour
             deck.Add(next);
 
             //다음 스폰될 테트로미노 보여주기
-            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.7f, -1f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(-9.6f, -1f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
@@ -114,7 +114,7 @@ public class TetrisSpawner : MonoBehaviour
             deck.Add(next);
 
             nextSpawn = null;
-            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.7f, -1f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(-9.6f, -1f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
@@ -132,7 +132,7 @@ public class TetrisSpawner : MonoBehaviour
             targetSpawn.tag = "Untagged";
             HoldBasket = targetSpawn; // 현재 테트로미노를 홀드바구니에 넣어줌
             Destroy(ghostTetromino);
-            HoldBasket.transform.position = new Vector3(-5, 16, 0); // 홀드 바구니 위치로 이동
+            HoldBasket.transform.position = new Vector3(-10, 16.8f, 0); // 홀드 바구니 위치로 이동
             HoldBasket.transform.rotation = Quaternion.Euler(0, 0, 0);
             HoldBasket.GetComponent<TetrisBlock>().enabled = false; // 홀드 값의 기능을 꺼줌
             targetSpawn = nextSpawn; // 현재 테트로미노를 다음 테트로미노에서 땡겨옴
@@ -160,7 +160,7 @@ public class TetrisSpawner : MonoBehaviour
                 HoldBasket.GetComponent<TetrisBlock>().enabled = true;
                 isHolding = true;
                 HoldBasket = targetSpawn;
-                HoldBasket.transform.position = new Vector3(-5, 16, 0);
+                HoldBasket.transform.position = new Vector3(-10, 16.8f, 0);
                 HoldBasket.transform.rotation = Quaternion.Euler(0, 0, 0);
                 targetSpawn.GetComponent<TetrisBlock>().enabled = false;
                 HoldBasket.transform.position = targetSpawn.transform.position;
