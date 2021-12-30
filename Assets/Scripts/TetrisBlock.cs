@@ -20,7 +20,6 @@ public class TetrisBlock : MonoBehaviour
     bool isgameover;
 
     bool isdelay;
-    float time;
 
     TetrisSpawner TetrisSpawn;
 
@@ -29,7 +28,6 @@ public class TetrisBlock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        time = 0;
         isRKey = true;
         isLKey = true;
         isdelay = true;
@@ -116,7 +114,7 @@ public class TetrisBlock : MonoBehaviour
             isLKey = false;
             isdelay = true;
         }
-
+        
         //키보드 입력값이 왼쪽 화살표이면 moveLeft함수, 오른쪽 화살표이면 moveRight함수 실행
         if (isLKey && Time.time - previousTimeLeft + AutorepeatSpeed > (Input.GetKey(KeyCode.LeftArrow) ? FallTime / 8 : FallTime * 100) && !isdelay && !isRKey)
         {
@@ -126,11 +124,11 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X))
+        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X))&& GameObject.FindGameObjectWithTag("currentBlock").name!= "O Mino(Clone)")
         {
             rotateBlock();
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.Z) && GameObject.FindGameObjectWithTag("currentBlock").name != "O Mino(Clone)")
         {
             leftrotateBlock();
         }
