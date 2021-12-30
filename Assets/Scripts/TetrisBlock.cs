@@ -604,7 +604,7 @@ public class TetrisBlock : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(5).gameObject.SetActive(true);
-        for (int i = 7; i < 12; i++)
+        for (int i = 6; i < 11; i++)
         {
             GameObject.FindWithTag("GameOver").gameObject.transform.GetChild(i).gameObject.SetActive(false);
         }
