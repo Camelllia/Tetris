@@ -88,7 +88,7 @@ public class TetrisSpawner : MonoBehaviour
             deck.Add(next);
 
             //다음 스폰될 테트로미노 보여주기
-            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.7f, -1f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
@@ -114,7 +114,7 @@ public class TetrisSpawner : MonoBehaviour
             deck.Add(next);
 
             nextSpawn = null;
-            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.4f, -0.5f, 0), Quaternion.identity);
+            nextSpawn = Instantiate(Tetrominoes[next], transform.position + new Vector3(6.7f, -1f, 0), Quaternion.identity);
             nextSpawn.GetComponent<TetrisBlock>().enabled = false;
             nextSpawn.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
