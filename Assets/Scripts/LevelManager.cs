@@ -35,6 +35,8 @@ public class LevelManager : MonoBehaviour
         level = 1;
         linecnt = 0;
         speed = 1;
+
+        Screen.SetResolution(1200, 600, false);
     }
 
     // Update is called once per frame

@@ -177,6 +177,11 @@ public class TetrisBlock : MonoBehaviour
             transform.position -= new Vector3(-1, 0, 0);
         }
         previousTimeLeft = Time.time;
+        if (ValidMove() && Arrived() && rotateCount > 0)
+        {
+            previousTime = Time.time;
+            rotateCount--;
+        }
     }
 
     void moveRight()
@@ -187,6 +192,11 @@ public class TetrisBlock : MonoBehaviour
             transform.position -= new Vector3(1, 0, 0);
         }
         previousTimeRight = Time.time;
+        if (ValidMove() && Arrived() && rotateCount > 0)
+        {
+            previousTime = Time.time;
+            rotateCount--;
+        }
     }
 
     void moveDown()
@@ -222,6 +232,15 @@ public class TetrisBlock : MonoBehaviour
         foreach (Transform children in transform)
         {
             children.transform.eulerAngles += new Vector3(0, 0, 90);
+        }
+
+        if (!ValidDown())
+        {
+            transform.position += new Vector3(0, 1, 0);
+            if (!ValidDown())
+            {
+                transform.position += new Vector3(0, -1, 0);
+            }
         }
 
         if (!ValidLMove() && !ValidRMove())
@@ -280,6 +299,15 @@ public class TetrisBlock : MonoBehaviour
         foreach (Transform children in transform)
         {
             children.transform.eulerAngles += new Vector3(0, 0, -90);
+        }
+
+        if (!ValidDown())
+        {
+            transform.position += new Vector3(0, 1, 0);
+            if (!ValidDown())
+            {
+                transform.position += new Vector3(0, -1, 0);
+            }
         }
 
         if (!ValidLMove() && !ValidRMove())
@@ -547,6 +575,14 @@ public class TetrisBlock : MonoBehaviour
             int roundedX = Mathf.RoundToInt(children.transform.position.x);
             int roundedY = Mathf.RoundToInt(children.transform.position.y);
             if (roundedY < 0)
+            {
+                return false;
+            }
+            else if (!ValidLMove())
+            {
+                return false;
+            }
+            else if (!ValidRMove())
             {
                 return false;
             }
