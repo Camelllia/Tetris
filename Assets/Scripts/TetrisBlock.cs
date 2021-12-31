@@ -172,31 +172,31 @@ public class TetrisBlock : MonoBehaviour
     void moveLeft()
     {
         transform.position += new Vector3(-1, 0, 0);//왼쪽으로 이동
+        if (ValidMove() && Arrived() && rotateCount > 0)
+        {
+            previousTime = Time.time;
+            rotateCount--;
+        }
         if (!ValidMove())
         {
             transform.position -= new Vector3(-1, 0, 0);
         }
         previousTimeLeft = Time.time;
-        if (ValidMove() && Arrived() && rotateCount > 0)
-        {
-            previousTime = Time.time;
-            rotateCount--;
-        }
     }
 
     void moveRight()
     {
         transform.position += new Vector3(1, 0, 0);//오른쪽으로 이동
-        if (!ValidMove())
-        {
-            transform.position -= new Vector3(1, 0, 0);
-        }
-        previousTimeRight = Time.time;
         if (ValidMove() && Arrived() && rotateCount > 0)
         {
             previousTime = Time.time;
             rotateCount--;
         }
+        if (!ValidMove())
+        {
+            transform.position -= new Vector3(1, 0, 0);
+        }
+        previousTimeRight = Time.time;
     }
 
     void moveDown()

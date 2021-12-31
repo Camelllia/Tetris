@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (linecnt >= 10 && level < 26)
+        if (linecnt >= 10)
         {
             level++;
             lvlText.text = "Level: " + level;
