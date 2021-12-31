@@ -112,7 +112,8 @@ public class TetrisBlock : MonoBehaviour
         {
             moveRight();
         }
-        else if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X)) && GameObject.FindGameObjectWithTag("currentBlock").name != "O Mino(Clone)")
+        
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.X)) && GameObject.FindGameObjectWithTag("currentBlock").name != "O Mino(Clone)")
         {
             rotateBlock();
         }
